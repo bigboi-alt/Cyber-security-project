@@ -54,7 +54,8 @@ export function saveOrUpdateStudent(profile: StudentProfile): StudentProfile {
       passwordGameHighScore: Math.max(all[existingIdx].passwordGameHighScore, profile.passwordGameHighScore),
       phishGuardScore: Math.max(all[existingIdx].phishGuardScore, profile.phishGuardScore),
       easterEggsFound: Array.from(new Set([...all[existingIdx].easterEggsFound, ...profile.easterEggsFound])),
-      badges: Array.from(new Set([...all[existingIdx].badges, ...profile.badges]))
+      badges: Array.from(new Set([...all[existingIdx].badges, ...profile.badges])),
+      displayedBadges: profile.displayedBadges !== undefined ? profile.displayedBadges : all[existingIdx].displayedBadges
     };
     all[existingIdx] = updated;
   } else {

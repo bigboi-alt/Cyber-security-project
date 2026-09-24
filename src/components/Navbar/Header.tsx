@@ -20,6 +20,7 @@ interface HeaderProps {
   onTabChange: (tab: string) => void;
   onOpenLogin: () => void;
   onLogout: () => void;
+  onOpenProfile?: () => void;
   isMuted?: boolean;
   onToggleSound?: () => void;
 }
@@ -30,6 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
   onTabChange,
   onOpenLogin,
   onLogout,
+  onOpenProfile,
 }) => {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -89,9 +91,18 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           {student ? (
             <div className="flex items-center gap-2.5 bg-zinc-900/90 border border-zinc-800 rounded-xl px-3 py-1.5 shadow-sm">
-              <div className="text-left">
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  if (onOpenProfile) onOpenProfile();
+                }}
+                className="text-left cursor-pointer group hover:opacity-85 transition-opacity"
+                title="Click to view and edit profile"
+              >
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-semibold text-white whitespace-nowrap">{student.name}</span>
+                  <span className="text-xs font-semibold text-white whitespace-nowrap group-hover:underline underline-offset-2">
+                    {student.name}
+                  </span>
                   <span className="text-[10px] font-mono px-1 py-0.2 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">
                     {student.grade}-{student.section}
                   </span>
@@ -99,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="text-[11px] text-[#9d9e99] font-mono">
                   {student.points} pts
                 </div>
-              </div>
+              </button>
 
               <button
                 onClick={onLogout}

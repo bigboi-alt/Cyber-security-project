@@ -13,6 +13,7 @@ import {
 import confetti from 'canvas-confetti';
 import type { QuizQuestion, StudentProfile } from '../../../types';
 import { sound } from '../../../utils/sound';
+import { verifySaltedHash } from '../../../utils/security';
 
 interface CyberQuizProps {
   student: StudentProfile | null;
@@ -33,11 +34,12 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       body: 'Dear Student,\nYour upcoming examination schedule has been altered. Log in via the link below with your school credentials within 30 minutes to confirm your seat:\n\nhttp://khaitan-portal-portal-verify.in/login.php',
     },
     options: [
-      { id: 'a', text: 'Click the link immediately and enter your school password so you don\'t miss exams.', isCorrect: false },
-      { id: 'b', text: 'Notice the misspelled sender domain ("thekhaltanschool.org" uses an "l" instead of "i") and report it.', isCorrect: true },
-      { id: 'c', text: 'Forward the email to your entire class WhatsApp group.', isCorrect: false },
-      { id: 'd', text: 'Reply with your phone number asking if this notice is real.', isCorrect: false },
+      { id: 'a', text: 'Click the link immediately and enter your school password so you don\'t miss exams.' },
+      { id: 'b', text: 'Notice the misspelled sender domain ("thekhaltanschool.org" uses an "l" instead of "i") and report it.' },
+      { id: 'c', text: 'Forward the email to your entire class WhatsApp group.' },
+      { id: 'd', text: 'Reply with your phone number asking if this notice is real.' },
     ],
+    hashDigest: '2b83508f',
     explanation: 'Correct! The sender address uses a typosquatted domain ("thekhaltanschool.org" with an "l" instead of "i") and creates artificial urgency linking to an insecure HTTP site.',
     points: 100
   },
@@ -52,11 +54,12 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       body: 'Label handwritten on drive: "Class 10 CBSE Leaked Paper 2026"\nFile found inside: "Question_Paper_Final.pdf.exe"'
     },
     options: [
-      { id: 'a', text: 'Double click the file to view the leaked questions.', isCorrect: false },
-      { id: 'b', text: 'Copy the file onto your personal laptop and run it.', isCorrect: false },
-      { id: 'c', text: 'Recognize the double extension ".pdf.exe" as executable malware (USB Drop Baiting) and give it to the teacher.', isCorrect: true },
-      { id: 'd', text: 'Rename the file to remove ".exe" and execute it.', isCorrect: false }
+      { id: 'a', text: 'Double click the file to view the leaked questions.' },
+      { id: 'b', text: 'Copy the file onto your personal laptop and run it.' },
+      { id: 'c', text: 'Recognize the double extension ".pdf.exe" as executable malware (USB Drop Baiting) and give it to the teacher.' },
+      { id: 'd', text: 'Rename the file to remove ".exe" and execute it.' }
     ],
+    hashDigest: '95149865',
     explanation: 'Correct! Attackers use deceptive filenames like ".pdf.exe" to trick users into running executable malware or spyware.',
     points: 100
   },
@@ -72,11 +75,12 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       body: 'Hey! I got a promotional voucher for free premium gaming skins, but it needs an active school email. I just triggered the reset link—can you tell me the 6-digit code sent to your phone real quick?'
     },
     options: [
-      { id: 'a', text: 'Share the 6-digit OTP since they are in your mutual group.', isCorrect: false },
-      { id: 'b', text: 'Never share the OTP—it is a two-factor verification code that would allow them to take over your account.', isCorrect: true },
-      { id: 'c', text: 'Ask for the voucher code first, then share the OTP.', isCorrect: false },
-      { id: 'd', text: 'Send the OTP to see if it actually works.', isCorrect: false }
+      { id: 'a', text: 'Share the 6-digit OTP since they are in your mutual group.' },
+      { id: 'b', text: 'Never share the OTP—it is a two-factor verification code that would allow them to take over your account.' },
+      { id: 'c', text: 'Ask for the voucher code first, then share the OTP.' },
+      { id: 'd', text: 'Send the OTP to see if it actually works.' }
     ],
+    hashDigest: '3db487e1',
     explanation: 'Correct! Never share verification codes or OTPs with anyone under any circumstances. They were attempting an account takeover.',
     points: 100
   },
@@ -91,11 +95,12 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       url: 'Network 1: CafeGuest_Encrypted [Password Protected, WPA2]\nNetwork 2: Free_Khaitan_UltraFast_WiFi [Open, No Password]'
     },
     options: [
-      { id: 'a', text: 'Connect to the Open Wi-Fi because it has the school name and doesn\'t require a password.', isCorrect: false },
-      { id: 'b', text: 'Connect to the protected cafe network and avoid rogue open access points ("Evil Twin").', isCorrect: true },
-      { id: 'c', text: 'Connect to both simultaneously.', isCorrect: false },
-      { id: 'd', text: 'Open your netbanking on the open Wi-Fi to test the speed.', isCorrect: false }
+      { id: 'a', text: 'Connect to the Open Wi-Fi because it has the school name and doesn\'t require a password.' },
+      { id: 'b', text: 'Connect to the protected cafe network and avoid rogue open access points ("Evil Twin").' },
+      { id: 'c', text: 'Connect to both simultaneously.' },
+      { id: 'd', text: 'Open your netbanking on the open Wi-Fi to test the speed.' }
     ],
+    hashDigest: '240158f4',
     explanation: 'Correct! Rogue open networks ("Evil Twins") are easily created by attackers to intercept and snoop on unencrypted traffic.',
     points: 100
   },
@@ -110,11 +115,12 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       url: 'https://accounts.google.com.security-check-portal.org/login'
     },
     options: [
-      { id: 'a', text: 'google.com (Google\'s official authentication service).', isCorrect: false },
-      { id: 'b', text: 'security-check-portal.org (an unrelated third-party domain).', isCorrect: true },
-      { id: 'c', text: 'accounts.com (Accounts domain).', isCorrect: false },
-      { id: 'd', text: 'login.org (Login organization).', isCorrect: false }
+      { id: 'a', text: 'google.com (Google\'s official authentication service).' },
+      { id: 'b', text: 'security-check-portal.org (an unrelated third-party domain).' },
+      { id: 'c', text: 'accounts.com (Accounts domain).' },
+      { id: 'd', text: 'login.org (Login organization).' }
     ],
+    hashDigest: '2d6f94db',
     explanation: 'Correct! In domain hierarchy, the actual domain is "security-check-portal.org". The "accounts.google.com" part is merely a subdomain prefix created to fool unsuspecting users.',
     points: 100
   }
@@ -139,8 +145,8 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
     if (!selectedOptionId || isAnswerSubmitted) return;
     setIsAnswerSubmitted(true);
 
-    const chosen = currentQ.options.find(o => o.id === selectedOptionId);
-    if (chosen?.isCorrect) {
+    const isCorrect = verifySaltedHash(currentQ.id, selectedOptionId, currentQ.hashDigest);
+    if (isCorrect) {
       sound.playSuccess();
       const pointsWon = currentQ.points;
       setScore(prev => prev + pointsWon);
@@ -269,12 +275,13 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
           <div className="space-y-2">
             {currentQ.options.map((option) => {
               const isSelected = selectedOptionId === option.id;
+              const isCorrectOption = verifySaltedHash(currentQ.id, option.id, currentQ.hashDigest);
               let style = 'bg-[#18181b] border-zinc-800 text-zinc-300 hover:border-zinc-700';
 
               if (isAnswerSubmitted) {
-                if (option.isCorrect) {
+                if (isCorrectOption) {
                   style = 'bg-zinc-800/80 border-green-500/80 text-white font-medium';
-                } else if (isSelected && !option.isCorrect) {
+                } else if (isSelected && !isCorrectOption) {
                   style = 'bg-zinc-800/80 border-red-500/80 text-zinc-300';
                 } else {
                   style = 'bg-[#18181b] border-zinc-800 text-zinc-600';
@@ -294,10 +301,10 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
                     {option.id}.
                   </span>
                   <span className="flex-1 leading-relaxed">{option.text}</span>
-                  {isAnswerSubmitted && option.isCorrect && (
+                  {isAnswerSubmitted && isCorrectOption && (
                     <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
                   )}
-                  {isAnswerSubmitted && isSelected && !option.isCorrect && (
+                  {isAnswerSubmitted && isSelected && !isCorrectOption && (
                     <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                   )}
                 </button>

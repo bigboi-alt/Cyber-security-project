@@ -10,6 +10,7 @@ import { PasswordGame } from './components/Games/PasswordGame/PasswordGame';
 import { PhishGuard } from './components/Games/PhishGuard/PhishGuard';
 import { SchoolLeaderboard } from './components/Leaderboard/SchoolLeaderboard';
 import { MetallicCreditsModal } from './components/Credits/MetallicCreditsModal';
+import { ProfileCentreModal } from './components/Profile/ProfileCentreModal';
 import type { StudentProfile } from './types';
 import { 
   getCurrentUser, 
@@ -25,6 +26,8 @@ export function App() {
   const [currentStudent, setStudent] = useState<StudentProfile | null>(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isCreditsOpen, setIsCreditsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [viewingStudent, setViewingStudent] = useState<StudentProfile | null>(null);
   const [isMuted, setIsMuted] = useState(sound.getMuted());
   const [checklistClaimed, setChecklistClaimed] = useState(false);
 
@@ -74,6 +77,10 @@ export function App() {
           onTabChange={setActiveTab}
           onOpenLogin={() => setIsLoginOpen(true)}
           onLogout={handleLogout}
+          onOpenProfile={() => {
+            setViewingStudent(currentStudent);
+            setIsProfileOpen(true);
+          }}
           isMuted={isMuted}
           onToggleSound={handleToggleSound}
         />
@@ -128,25 +135,42 @@ export function App() {
           {activeTab === 'leaderboard' && (
             <SchoolLeaderboard
               currentStudent={currentStudent}
+              onViewProfile={(st) => {
+                setViewingStudent(st);
+                setIsProfileOpen(true);
+              }}
             />
           )}
         </main>
 
-        {/* Clean Center-Aligned Footer with Arya & Akshaj Credits */}
-        <footer className="relative z-20 border-t border-zinc-800/80 bg-[#0c0c0e]/90 backdrop-blur-md py-4 px-4 text-center">
-          <div className="w-full max-w-[1850px] mx-auto flex items-center justify-center">
-            <button
-              onClick={() => {
-                sound.playClick();
-                setIsCreditsOpen(true);
-              }}
-              className="text-xs text-[#9d9e99] hover:text-white transition-colors cursor-pointer group flex items-center justify-center gap-1.5 font-medium select-none"
-            >
-              <span>Built by</span>
-              <span className="text-zinc-100 font-semibold underline underline-offset-4 decoration-zinc-600 group-hover:decoration-white transition-colors">
-                Arya and Akshaj
-              </span>
-            </button>
+        {/* Clean Scrolled-Down Footer: Far Left The Khaitan School, Middle Arya & Akshaj */}
+        <footer className="relative z-20 border-t border-zinc-800/80 bg-[#0c0c0e]/95 backdrop-blur-md py-4 px-4 sm:px-6">
+          <div className="w-full max-w-[1850px] mx-auto grid grid-cols-1 sm:grid-cols-3 items-center gap-3 text-xs">
+            {/* Far Left: The Khaitan School */}
+            <div className="text-zinc-400 font-medium tracking-wide text-center sm:text-left select-none">
+              The Khaitan School
+            </div>
+
+            {/* Middle: Built by Arya and Akshaj */}
+            <div className="flex justify-center">
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setIsCreditsOpen(true);
+                }}
+                className="text-xs text-[#9d9e99] hover:text-white transition-colors cursor-pointer group flex items-center justify-center gap-1.5 font-medium select-none"
+              >
+                <span>Built by</span>
+                <span className="text-zinc-100 font-semibold underline underline-offset-4 decoration-zinc-600 group-hover:decoration-white transition-colors">
+                  Arya and Akshaj
+                </span>
+              </button>
+            </div>
+
+            {/* Far Right: Cyber Security Initiative */}
+            <div className="text-zinc-500 font-mono text-[11px] text-center sm:text-right hidden sm:block select-none">
+              Cyber Security Initiative
+            </div>
           </div>
         </footer>
       </div>
@@ -159,7 +183,22 @@ export function App() {
         existingStudents={getStoredStudents()}
       />
 
-      {/* Metallic Card for Arya & Akshajh leading to GitHub */}
+      {/* Profile Centre Modal */}
+      <ProfileCentreModal
+        isOpen={isProfileOpen}
+        onClose={() => {
+          setIsProfileOpen(false);
+          setViewingStudent(null);
+        }}
+        currentStudent={currentStudent}
+        viewingStudent={viewingStudent}
+        onUpdateStudent={(updated) => {
+          const saved = saveOrUpdateStudent(updated);
+          setStudent(saved);
+        }}
+      />
+
+      {/* Metallic Card for Arya & Akshaj leading to GitHub */}
       <MetallicCreditsModal
         isOpen={isCreditsOpen}
         onClose={() => setIsCreditsOpen(false)}

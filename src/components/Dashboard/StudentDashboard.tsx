@@ -201,73 +201,34 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </div>
       </div>
 
-      {/* 2. Tasks Completed & Activity Status Grid */}
-      <div className="rounded-2xl bg-[#0c0c0e] border border-zinc-800 p-6 sm:p-7 shadow-lg space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-4">
-          <div>
-            <div className="text-[10px] font-mono uppercase tracking-widest text-[#9d9e99]">
-              Activity Progress
-            </div>
-            <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-400" />
-              <span>Your Completed Tasks & Mission Status</span>
-            </h2>
+      {/* 2. Simple Activity Progress Block */}
+      <div className="rounded-2xl bg-[#0c0c0e] border border-zinc-800 p-6 sm:p-7 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+        <div className="space-y-1">
+          <div className="text-[10px] font-mono uppercase tracking-widest text-[#9d9e99]">
+            Activity Progress
           </div>
-
-          <div className="text-xs font-mono text-zinc-400">
-            Completed: <strong className="text-white">{completedTasksCount}</strong> of {tasks.length} available
-          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-green-400" />
+            <span>Modules & Tasks Completed</span>
+          </h2>
+          <p className="text-xs text-zinc-400">
+            Progress tracked across simulation modules, threat scenarios, and operational exercises.
+          </p>
         </div>
 
-        {/* Task Items Block List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
-          {tasks.map((task) => (
-            <div
-              key={task.id}
-              onClick={() => {
-                sound.playClick();
-                onNavigateTab(task.tab);
-              }}
-              className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
-                task.isCompleted
-                  ? 'bg-[#121215] border-green-500/50 hover:border-green-400'
-                  : 'bg-[#111113] border-zinc-800 hover:border-zinc-600'
-              }`}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#9d9e99] bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
-                    {task.category}
-                  </span>
-
-                  {task.isCompleted ? (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-green-950/60 border border-green-500/60 text-green-300 font-bold flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3 text-green-400" /> Done
-                    </span>
-                  ) : (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> Available
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="text-sm font-bold text-white leading-snug">
-                  {task.title}
-                </h3>
-
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  {task.description}
-                </p>
-              </div>
-
-              <div className="pt-3 mt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono">
-                <span className="text-[#9d9e99] font-bold">+{task.points} pts</span>
-                <span className="text-white flex items-center gap-1 group-hover:underline text-[11px]">
-                  {task.isCompleted ? 'Review' : 'Start Task'} <ArrowRight className="w-3 h-3 text-zinc-400" />
-                </span>
-              </div>
+        <div className="flex items-center gap-5 bg-[#121215] border border-zinc-800 px-6 py-4 rounded-xl shrink-0">
+          <div className="text-right">
+            <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99]">
+              Status
             </div>
-          ))}
+            <div className="text-xs text-zinc-400 font-mono">
+              Completed
+            </div>
+          </div>
+          <div className="h-10 w-px bg-zinc-800" />
+          <div className="font-mono text-3xl sm:text-4xl font-black text-white tracking-tight">
+            {completedTasksCount}<span className="text-zinc-500 font-normal text-2xl">/{tasks.length}</span>
+          </div>
         </div>
       </div>
 

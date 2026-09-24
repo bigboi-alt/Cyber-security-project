@@ -6,9 +6,10 @@ import { sound } from '../../utils/sound';
 
 interface SchoolLeaderboardProps {
   currentStudent: StudentProfile | null;
+  onViewProfile?: (student: StudentProfile) => void;
 }
 
-export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStudent }) => {
+export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStudent, onViewProfile }) => {
   const [activeTab, setActiveTab] = useState<'sections' | 'students'>('sections');
   const [selectedGrade, setSelectedGrade] = useState<string>('all');
 
@@ -115,7 +116,15 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
             return (
               <div
                 key={idx}
-                className={`p-5 rounded-2xl border text-center space-y-2 relative overflow-hidden shadow-lg ${
+                onClick={() => {
+                  if (activeTab === 'students' && onViewProfile) {
+                    sound.playClick();
+                    onViewProfile(item as StudentProfile);
+                  }
+                }}
+                className={`p-5 rounded-2xl border text-center space-y-2 relative overflow-hidden shadow-lg transition-all ${
+                  activeTab === 'students' ? 'cursor-pointer hover:border-zinc-500' : ''
+                } ${
                   isRank1
                     ? 'bg-[#121216] border-zinc-500 shadow-zinc-900/50'
                     : 'bg-[#0e0e11] border-zinc-800'
@@ -220,9 +229,16 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                 return (
                   <div
                     key={st.id}
-                    className={`flex items-center justify-between p-4 text-xs transition-colors ${
-                      isCurrentUser ? 'bg-[#151519] border-l-2 border-l-white' : 'hover:bg-zinc-900/40'
+                    onClick={() => {
+                      if (onViewProfile) {
+                        sound.playClick();
+                        onViewProfile(st);
+                      }
+                    }}
+                    className={`flex items-center justify-between p-4 text-xs transition-colors cursor-pointer group ${
+                      isCurrentUser ? 'bg-[#151519] border-l-2 border-l-white' : 'hover:bg-zinc-900/60'
                     }`}
+                    title="Click to view cadet dossier and badges"
                   >
                     <div className="flex items-center gap-4">
                       <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono font-bold text-xs ${
@@ -237,7 +253,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
 
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-sm text-white">{st.name}</span>
+                          <span className="font-bold text-sm text-white group-hover:underline underline-offset-2">{st.name}</span>
                           {isCurrentUser && (
                             <span className="text-[10px] bg-zinc-800 border border-zinc-700 text-[#9d9e99] px-2 py-0.5 rounded font-mono font-semibold">
                               You
@@ -250,8 +266,13 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                       </div>
                     </div>
 
-                    <div className="text-right font-mono">
-                      <div className="font-black text-white text-base">{st.points} pts</div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] font-mono text-zinc-400 hidden sm:inline-block opacity-0 group-hover:opacity-100 transition-opacity">
+                        View Profile →
+                      </span>
+                      <div className="text-right font-mono">
+                        <div className="font-black text-white text-base">{st.points} pts</div>
+                      </div>
                     </div>
                   </div>
                 );

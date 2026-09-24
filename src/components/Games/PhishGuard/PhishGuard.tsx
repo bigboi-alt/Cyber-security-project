@@ -14,6 +14,7 @@ import {
 import confetti from 'canvas-confetti';
 import type { PhishIncident, StudentProfile } from '../../../types';
 import { sound } from '../../../utils/sound';
+import { verifySaltedHash } from '../../../utils/security';
 
 interface PhishGuardProps {
   student: StudentProfile | null;
@@ -31,7 +32,7 @@ const INCIDENTS: PhishIncident[] = [
     urgency: 'High',
     indicators: ['Typosquatted domain ("thekhaltanschool.org" has "l" instead of "i")', 'Insecure HTTP link', 'Urgent suspension threat'],
     classification: 'PHISHING',
-    recommendedAction: 'QUARANTINE',
+    actionDigest: '2e440e35',
     explanation: 'Correct! The sender domain was misspelled ("thekhaltanschool.org") and directed you to an insecure external website.'
   },
   {
@@ -44,7 +45,7 @@ const INCIDENTS: PhishIncident[] = [
     urgency: 'Low',
     indicators: ['Legitimate @thekhaitanschool.org domain', 'Informational only', 'No credential harvesting links'],
     classification: 'BENIGN',
-    recommendedAction: 'ALLOW',
+    actionDigest: '1422dea9',
     explanation: 'Correct! This is a legitimate circular sent from the official school domain without deceptive links.'
   },
   {
@@ -57,7 +58,7 @@ const INCIDENTS: PhishIncident[] = [
     urgency: 'Critical',
     indicators: ['Impersonation of Government authority', 'Asking for banking OTP', 'Sent from free hosting server'],
     classification: 'GOV_ALERT',
-    recommendedAction: 'REPORT_CERTIN',
+    actionDigest: '97689335',
     explanation: 'Correct! Financial scams soliciting bank details or OTPs should be immediately reported to CERT-In or 1930.'
   },
   {
@@ -70,7 +71,7 @@ const INCIDENTS: PhishIncident[] = [
     urgency: 'Medium',
     indicators: ['Executable .bat file attached', 'Unsolicited script', 'Potential trojan'],
     classification: 'MALWARE_DROP',
-    recommendedAction: 'QUARANTINE',
+    actionDigest: '5f4ffc28',
     explanation: 'Correct! Unsolicited executable files (.bat, .exe) must always be quarantined to prevent potential malware execution.'
   },
   {
@@ -83,7 +84,7 @@ const INCIDENTS: PhishIncident[] = [
     urgency: 'High',
     indicators: ['Official CERT-In domain', 'Public security advisory', 'No credential requests'],
     classification: 'BENIGN',
-    recommendedAction: 'ALLOW',
+    actionDigest: 'ff085bc8',
     explanation: 'Correct! This is an authentic advisory from CERT-In providing helpful cyber hygiene recommendations.'
   }
 ];
@@ -116,7 +117,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
   const handleAction = (action: 'ALLOW' | 'QUARANTINE' | 'REPORT_CERTIN', timedOut = false) => {
     if (feedback || isGameOver) return;
 
-    const isCorrect = !timedOut && action === currentIncident.recommendedAction;
+    const isCorrect = !timedOut && verifySaltedHash(currentIncident.id, action, currentIncident.actionDigest);
 
     if (isCorrect) {
       sound.playSuccess();
@@ -132,8 +133,8 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
       setFeedback({
         isCorrect: false,
         text: timedOut
-          ? `Time expired. Recommended action was: ${currentIncident.recommendedAction}.`
-          : `Incorrect. Recommended action was: ${currentIncident.recommendedAction}. ${currentIncident.explanation}`
+          ? 'Time expired for this notice. In active cyber triage, inspect sender verification and links quickly.'
+          : 'Incorrect triage decision. Check the sender domain, headers, and indicators carefully.'
       });
     }
   };

@@ -16,6 +16,7 @@ export interface StudentProfile {
   phishGuardScore: number;
   joinedAt: string;
   badges: string[];
+  displayedBadges?: string[];
 }
 
 export interface ClassSectionStats {
@@ -43,8 +44,8 @@ export interface QuizQuestion {
   options: {
     id: string;
     text: string;
-    isCorrect: boolean;
   }[];
+  hashDigest: string;
   explanation: string;
   points: number;
 }
@@ -87,6 +88,6 @@ export interface PhishIncident {
   urgency: 'Low' | 'Medium' | 'High' | 'Critical';
   indicators: string[];
   classification: 'BENIGN' | 'PHISHING' | 'MALWARE_DROP' | 'GOV_ALERT';
-  recommendedAction: 'ALLOW' | 'QUARANTINE' | 'REPORT_CERTIN';
+  actionDigest: string;
   explanation: string;
 }
