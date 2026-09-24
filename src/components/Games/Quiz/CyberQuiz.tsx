@@ -1,0 +1,357 @@
+import React, { useState } from 'react';
+import { 
+  FileQuestion, 
+  CheckCircle2, 
+  XCircle, 
+  ArrowRight, 
+  RotateCcw, 
+  Mail, 
+  Smartphone, 
+  Globe, 
+  HardDrive
+} from 'lucide-react';
+import confetti from 'canvas-confetti';
+import type { QuizQuestion, StudentProfile } from '../../../types';
+import { sound } from '../../../utils/sound';
+
+interface CyberQuizProps {
+  student: StudentProfile | null;
+  onPointsEarned: (pts: number, badge?: string) => void;
+}
+
+const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'q1',
+    title: 'The Exam Timetable Notice',
+    category: 'Phishing',
+    difficulty: 'Cadet',
+    scenario: 'You receive an urgent email during exam week claiming your board timetable was revised. Check the sender and URL.',
+    visualType: 'email',
+    visualContent: {
+      sender: 'circulars@thekhaltanschool.org',
+      subject: 'URGENT: Revised Examination Schedule - Download Circular',
+      body: 'Dear Student,\nYour upcoming examination schedule has been altered. Log in via the link below with your school credentials within 30 minutes to confirm your seat:\n\nhttp://khaitan-portal-portal-verify.in/login.php',
+    },
+    options: [
+      { id: 'a', text: 'Click the link immediately and enter your school password so you don\'t miss exams.', isCorrect: false },
+      { id: 'b', text: 'Notice the misspelled sender domain ("thekhaltanschool.org" uses an "l" instead of "i") and report it.', isCorrect: true },
+      { id: 'c', text: 'Forward the email to your entire class WhatsApp group.', isCorrect: false },
+      { id: 'd', text: 'Reply with your phone number asking if this notice is real.', isCorrect: false },
+    ],
+    explanation: 'Correct! The sender address uses a typosquatted domain ("thekhaltanschool.org" with an "l" instead of "i") and creates artificial urgency linking to an insecure HTTP site.',
+    points: 100
+  },
+  {
+    id: 'q2',
+    title: 'The Flash Drive in the Lab',
+    category: 'Malware',
+    difficulty: 'Operative',
+    scenario: 'You find an unlabeled USB flash drive on a table in the school computer lab.',
+    visualType: 'code',
+    visualContent: {
+      body: 'Label handwritten on drive: "Class 10 CBSE Leaked Paper 2026"\nFile found inside: "Question_Paper_Final.pdf.exe"'
+    },
+    options: [
+      { id: 'a', text: 'Double click the file to view the leaked questions.', isCorrect: false },
+      { id: 'b', text: 'Copy the file onto your personal laptop and run it.', isCorrect: false },
+      { id: 'c', text: 'Recognize the double extension ".pdf.exe" as executable malware (USB Drop Baiting) and give it to the teacher.', isCorrect: true },
+      { id: 'd', text: 'Rename the file to remove ".exe" and execute it.', isCorrect: false }
+    ],
+    explanation: 'Correct! Attackers use deceptive filenames like ".pdf.exe" to trick users into running executable malware or spyware.',
+    points: 100
+  },
+  {
+    id: 'q3',
+    title: 'The Free Game Pass Message',
+    category: 'Social Engineering',
+    difficulty: 'Cadet',
+    scenario: 'Someone sharing a mutual gaming group with you sends you a message on Discord.',
+    visualType: 'sms',
+    visualContent: {
+      sender: 'Classmate_Alex',
+      body: 'Hey! I got a promotional voucher for free premium gaming skins, but it needs an active school email. I just triggered the reset link—can you tell me the 6-digit code sent to your phone real quick?'
+    },
+    options: [
+      { id: 'a', text: 'Share the 6-digit OTP since they are in your mutual group.', isCorrect: false },
+      { id: 'b', text: 'Never share the OTP—it is a two-factor verification code that would allow them to take over your account.', isCorrect: true },
+      { id: 'c', text: 'Ask for the voucher code first, then share the OTP.', isCorrect: false },
+      { id: 'd', text: 'Send the OTP to see if it actually works.', isCorrect: false }
+    ],
+    explanation: 'Correct! Never share verification codes or OTPs with anyone under any circumstances. They were attempting an account takeover.',
+    points: 100
+  },
+  {
+    id: 'q4',
+    title: 'Open Wi-Fi at a Nearby Cafe',
+    category: 'Network',
+    difficulty: 'Operative',
+    scenario: 'You are studying at a cafe near school and open your Wi-Fi settings.',
+    visualType: 'url',
+    visualContent: {
+      url: 'Network 1: CafeGuest_Encrypted [Password Protected, WPA2]\nNetwork 2: Free_Khaitan_UltraFast_WiFi [Open, No Password]'
+    },
+    options: [
+      { id: 'a', text: 'Connect to the Open Wi-Fi because it has the school name and doesn\'t require a password.', isCorrect: false },
+      { id: 'b', text: 'Connect to the protected cafe network and avoid rogue open access points ("Evil Twin").', isCorrect: true },
+      { id: 'c', text: 'Connect to both simultaneously.', isCorrect: false },
+      { id: 'd', text: 'Open your netbanking on the open Wi-Fi to test the speed.', isCorrect: false }
+    ],
+    explanation: 'Correct! Rogue open networks ("Evil Twins") are easily created by attackers to intercept and snoop on unencrypted traffic.',
+    points: 100
+  },
+  {
+    id: 'q5',
+    title: 'Subdomain Verification',
+    category: 'Privacy',
+    difficulty: 'Sentinel',
+    scenario: 'Inspect this URL closely. What is the real root domain hosting this page?',
+    visualType: 'url',
+    visualContent: {
+      url: 'https://accounts.google.com.security-check-portal.org/login'
+    },
+    options: [
+      { id: 'a', text: 'google.com (Google\'s official authentication service).', isCorrect: false },
+      { id: 'b', text: 'security-check-portal.org (an unrelated third-party domain).', isCorrect: true },
+      { id: 'c', text: 'accounts.com (Accounts domain).', isCorrect: false },
+      { id: 'd', text: 'login.org (Login organization).', isCorrect: false }
+    ],
+    explanation: 'Correct! In domain hierarchy, the actual domain is "security-check-portal.org". The "accounts.google.com" part is merely a subdomain prefix created to fool unsuspecting users.',
+    points: 100
+  }
+];
+
+export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const currentQ = QUIZ_QUESTIONS[currentIndex];
+
+  const handleSelectOption = (optId: string) => {
+    if (isAnswerSubmitted) return;
+    sound.playClick();
+    setSelectedOptionId(optId);
+  };
+
+  const handleSubmitAnswer = () => {
+    if (!selectedOptionId || isAnswerSubmitted) return;
+    setIsAnswerSubmitted(true);
+
+    const chosen = currentQ.options.find(o => o.id === selectedOptionId);
+    if (chosen?.isCorrect) {
+      sound.playSuccess();
+      const pointsWon = currentQ.points;
+      setScore(prev => prev + pointsWon);
+      onPointsEarned(pointsWon, 'Quiz Completed');
+    } else {
+      sound.playError();
+    }
+  };
+
+  const handleNextQuestion = () => {
+    sound.playClick();
+    if (currentIndex < QUIZ_QUESTIONS.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+      setSelectedOptionId(null);
+      setIsAnswerSubmitted(false);
+    } else {
+      setIsCompleted(true);
+      sound.playSuccess();
+      confetti({ particleCount: 60, spread: 60 });
+    }
+  };
+
+  const handleRestart = () => {
+    sound.playClick();
+    setCurrentIndex(0);
+    setSelectedOptionId(null);
+    setIsAnswerSubmitted(false);
+    setScore(0);
+    setIsCompleted(false);
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto space-y-5 pb-12">
+      {/* Header */}
+      <div className="flex items-center justify-between bg-[#121214] p-4 rounded-xl border border-zinc-800">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white">
+            <FileQuestion className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-white">Cyber Security Quiz</h3>
+            <p className="text-xs text-zinc-400">Interactive Scenario Assessment</p>
+          </div>
+        </div>
+
+        <div className="text-right font-mono">
+          <div className="text-[11px] text-zinc-400">Score</div>
+          <div className="text-sm font-bold text-white">{score} pts</div>
+        </div>
+      </div>
+
+      {!isCompleted ? (
+        <div className="rounded-xl bg-[#121214] border border-zinc-800 p-5 sm:p-6 space-y-5">
+          {/* Progress */}
+          <div className="flex items-center justify-between text-xs text-zinc-400">
+            <span>Question {currentIndex + 1} of {QUIZ_QUESTIONS.length}</span>
+            <span className="font-mono text-zinc-300">+{currentQ.points} points</span>
+          </div>
+
+          {/* Scenario */}
+          <div>
+            <h4 className="text-base font-semibold text-white mb-1.5">
+              {currentQ.title}
+            </h4>
+            <p className="text-xs text-zinc-300 leading-relaxed">
+              {currentQ.scenario}
+            </p>
+          </div>
+
+          {/* Visual Scenario Card */}
+          {currentQ.visualContent && (
+            <div className="rounded-lg bg-[#18181b] border border-zinc-800 p-3.5 text-xs font-mono">
+              {currentQ.visualType === 'email' && (
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Incoming Email Notice</span>
+                  </div>
+                  <div className="text-zinc-400"><strong>From:</strong> {currentQ.visualContent.sender}</div>
+                  <div className="text-zinc-400"><strong>Subject:</strong> {currentQ.visualContent.subject}</div>
+                  <div className="pt-2 text-zinc-200 whitespace-pre-line border-t border-zinc-800/80">
+                    {currentQ.visualContent.body}
+                  </div>
+                </div>
+              )}
+
+              {currentQ.visualType === 'sms' && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
+                    <Smartphone className="w-3.5 h-3.5" />
+                    <span>Direct Message from {currentQ.visualContent.sender}</span>
+                  </div>
+                  <div className="text-zinc-200">
+                    {currentQ.visualContent.body}
+                  </div>
+                </div>
+              )}
+
+              {currentQ.visualType === 'url' && (
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>Network Inspector</span>
+                  </div>
+                  <div className="text-zinc-200 break-all select-all">
+                    {currentQ.visualContent.url}
+                  </div>
+                </div>
+              )}
+
+              {currentQ.visualType === 'code' && (
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
+                    <HardDrive className="w-3.5 h-3.5" />
+                    <span>Storage Inspection</span>
+                  </div>
+                  <div className="text-zinc-200 whitespace-pre-line">
+                    {currentQ.visualContent.body}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Options */}
+          <div className="space-y-2">
+            {currentQ.options.map((option) => {
+              const isSelected = selectedOptionId === option.id;
+              let style = 'bg-[#18181b] border-zinc-800 text-zinc-300 hover:border-zinc-700';
+
+              if (isAnswerSubmitted) {
+                if (option.isCorrect) {
+                  style = 'bg-zinc-800/80 border-green-500/80 text-white font-medium';
+                } else if (isSelected && !option.isCorrect) {
+                  style = 'bg-zinc-800/80 border-red-500/80 text-zinc-300';
+                } else {
+                  style = 'bg-[#18181b] border-zinc-800 text-zinc-600';
+                }
+              } else if (isSelected) {
+                style = 'bg-zinc-800 border-zinc-500 text-white';
+              }
+
+              return (
+                <button
+                  key={option.id}
+                  disabled={isAnswerSubmitted}
+                  onClick={() => handleSelectOption(option.id)}
+                  className={`w-full p-3 rounded-lg border text-left text-xs flex items-start gap-2.5 transition-colors cursor-pointer ${style}`}
+                >
+                  <span className="font-mono uppercase font-bold w-4 mt-0.5 text-zinc-400">
+                    {option.id}.
+                  </span>
+                  <span className="flex-1 leading-relaxed">{option.text}</span>
+                  {isAnswerSubmitted && option.isCorrect && (
+                    <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                  )}
+                  {isAnswerSubmitted && isSelected && !option.isCorrect && (
+                    <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Action */}
+          {!isAnswerSubmitted ? (
+            <button
+              disabled={!selectedOptionId}
+              onClick={handleSubmitAnswer}
+              className={`w-full py-2.5 px-4 rounded-lg font-medium text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+                selectedOptionId
+                  ? 'bg-white hover:bg-zinc-200 text-black'
+                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+              }`}
+            >
+              <span>Submit Answer</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          ) : (
+            <div className="space-y-3">
+              <div className="p-3.5 rounded-lg bg-[#18181b] border border-zinc-800 text-xs text-zinc-300 leading-relaxed">
+                <div className="font-semibold text-white mb-1">Explanation:</div>
+                {currentQ.explanation}
+              </div>
+
+              <button
+                onClick={handleNextQuestion}
+                className="w-full py-2.5 px-4 rounded-lg font-medium text-xs bg-white hover:bg-zinc-200 text-black transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span>{currentIndex < QUIZ_QUESTIONS.length - 1 ? 'Next Question' : 'Finish Quiz'}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        /* Completed */
+        <div className="rounded-xl bg-[#121214] border border-zinc-800 p-8 text-center space-y-4">
+          <h3 className="text-xl font-bold text-white">Quiz Completed</h3>
+          <p className="text-xs text-zinc-400">
+            You scored <strong className="text-white font-mono">{score} points</strong>. Points have been added to your account and your class squad.
+          </p>
+          <button
+            onClick={handleRestart}
+            className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Retake Quiz</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};

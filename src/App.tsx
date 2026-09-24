@@ -1,0 +1,171 @@
+import { useState, useEffect } from 'react';
+import { CosmicBackground } from './components/Background/CosmicBackground';
+import { Header } from './components/Navbar/Header';
+import { LoginModal } from './components/Auth/LoginModal';
+import { StudentDashboard } from './components/Dashboard/StudentDashboard';
+import { CyberIntelHub } from './components/Intel/CyberIntelHub';
+import { CyberQuiz } from './components/Games/Quiz/CyberQuiz';
+import { CyberHunt } from './components/Games/CyberHunt/CyberHunt';
+import { PasswordGame } from './components/Games/PasswordGame/PasswordGame';
+import { PhishGuard } from './components/Games/PhishGuard/PhishGuard';
+import { SchoolLeaderboard } from './components/Leaderboard/SchoolLeaderboard';
+import { MetallicCreditsModal } from './components/Credits/MetallicCreditsModal';
+import type { StudentProfile } from './types';
+import { 
+  getCurrentUser, 
+  setCurrentUser, 
+  getStoredStudents, 
+  saveOrUpdateStudent, 
+  addPointsToCurrentStudent 
+} from './utils/storage';
+import { sound } from './utils/sound';
+
+export function App() {
+  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [currentStudent, setStudent] = useState<StudentProfile | null>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isCreditsOpen, setIsCreditsOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(sound.getMuted());
+  const [checklistClaimed, setChecklistClaimed] = useState(false);
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      setStudent(user);
+    } else {
+      setIsLoginOpen(true);
+    }
+  }, []);
+
+  const handleToggleSound = () => {
+    const next = sound.toggleMute();
+    setIsMuted(next);
+  };
+
+  const handleLoginSuccess = (profile: StudentProfile) => {
+    const saved = saveOrUpdateStudent(profile);
+    setStudent(saved);
+  };
+
+  const handleLogout = () => {
+    sound.playClick();
+    setCurrentUser(null);
+    setStudent(null);
+    setIsLoginOpen(true);
+  };
+
+  const handlePointsEarned = (points: number, badgeName?: string) => {
+    const updated = addPointsToCurrentStudent(points, badgeName);
+    if (updated) {
+      setStudent(updated);
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen bg-[#09090b] text-zinc-100 selection:bg-zinc-800 selection:text-white">
+      {/* Black Starry Background with Rare Blue Comet and Red Star */}
+      <CosmicBackground />
+
+      {/* Main Container */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Header
+          student={currentStudent}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onOpenLogin={() => setIsLoginOpen(true)}
+          onLogout={handleLogout}
+          isMuted={isMuted}
+          onToggleSound={handleToggleSound}
+        />
+
+        <main className={`flex-1 w-full mx-auto ${activeTab === 'hunt' ? 'max-w-[1850px] px-2 sm:px-4' : 'max-w-6xl px-4 sm:px-6'} pt-4 pb-10 transition-all`}>
+          {activeTab === 'dashboard' && (
+            <StudentDashboard
+              student={currentStudent}
+              onNavigateTab={setActiveTab}
+              onOpenLogin={() => setIsLoginOpen(true)}
+            />
+          )}
+
+          {activeTab === 'hunt' && (
+            <CyberHunt
+              student={currentStudent}
+              onPointsEarned={handlePointsEarned}
+            />
+          )}
+
+          {activeTab === 'quiz' && (
+            <CyberQuiz
+              student={currentStudent}
+              onPointsEarned={handlePointsEarned}
+            />
+          )}
+
+          {activeTab === 'password' && (
+            <PasswordGame
+              student={currentStudent}
+              onPointsEarned={handlePointsEarned}
+            />
+          )}
+
+          {activeTab === 'phishguard' && (
+            <PhishGuard
+              student={currentStudent}
+              onPointsEarned={handlePointsEarned}
+            />
+          )}
+
+          {activeTab === 'intel' && (
+            <CyberIntelHub
+              hasClaimedBonus={checklistClaimed}
+              onAwardChecklistBonus={(pts) => {
+                setChecklistClaimed(true);
+                handlePointsEarned(pts, 'Hygiene Checklist');
+              }}
+            />
+          )}
+
+          {activeTab === 'leaderboard' && (
+            <SchoolLeaderboard
+              currentStudent={currentStudent}
+            />
+          )}
+        </main>
+
+        {/* Clean Center-Aligned Footer with Arya & Akshaj Credits */}
+        <footer className="relative z-20 border-t border-zinc-800/80 bg-[#0c0c0e]/90 backdrop-blur-md py-4 px-4 text-center">
+          <div className="w-full max-w-[1850px] mx-auto flex items-center justify-center">
+            <button
+              onClick={() => {
+                sound.playClick();
+                setIsCreditsOpen(true);
+              }}
+              className="text-xs text-[#9d9e99] hover:text-white transition-colors cursor-pointer group flex items-center justify-center gap-1.5 font-medium select-none"
+            >
+              <span>Built by</span>
+              <span className="text-zinc-100 font-semibold underline underline-offset-4 decoration-zinc-600 group-hover:decoration-white transition-colors">
+                Arya and Akshaj
+              </span>
+            </button>
+          </div>
+        </footer>
+      </div>
+
+      {/* Clean Login Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        existingStudents={getStoredStudents()}
+      />
+
+      {/* Metallic Card for Arya & Akshajh leading to GitHub */}
+      <MetallicCreditsModal
+        isOpen={isCreditsOpen}
+        onClose={() => setIsCreditsOpen(false)}
+      />
+    </div>
+  );
+}
+
+export default App;
