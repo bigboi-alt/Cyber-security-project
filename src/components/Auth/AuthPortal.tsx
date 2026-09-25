@@ -5,10 +5,14 @@ import {
   User, 
   Mail, 
   GraduationCap, 
-  ArrowRight,
-  Check,
-  UserCheck,
-  X
+  ArrowRight, 
+  Check, 
+  UserCheck, 
+  X, 
+  Lock, 
+  KeyRound, 
+  ShieldCheck, 
+  Fingerprint
 } from 'lucide-react';
 import type { ClassGrade, ClassSection, StudentProfile } from '../../types';
 import { sound } from '../../utils/sound';
@@ -24,7 +28,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
   onLoginSuccess,
   existingStudents,
   onClose,
-  canClose = false,
+  canClose = true,
 }) => {
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
@@ -141,38 +145,43 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
     if (onClose) onClose();
   };
 
+  const handleGuestContinue = () => {
+    sound.playClick();
+    if (onClose) onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-white text-black flex flex-col justify-between selection:bg-black selection:text-white">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-white text-zinc-900 flex flex-col justify-between selection:bg-black selection:text-white">
       
       {/* Background Architectural Grid Pattern */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.035]"
         style={{
           backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
-          backgroundSize: '32px 32px'
+          backgroundSize: '36px 36px'
         }}
       />
 
-      {/* Top Bar */}
+      {/* Top Header Bar */}
       <header className="relative z-10 w-full border-b-2 border-black bg-white px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-mono font-black text-sm">
+          <div className="w-9 h-9 bg-black text-white flex items-center justify-center font-mono font-black text-base shadow-[2px_2px_0px_#000000]">
             N
           </div>
           <div>
-            <div className="font-mono font-black text-sm uppercase tracking-wider">
+            <div className="font-mono font-black text-sm uppercase tracking-wider text-black">
               NEXUM // CYBER SECURITY INITIATIVE
             </div>
-            <div className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
-              The Khaitan School • Defense Terminal
+            <div className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-semibold">
+              The Khaitan School • Defense Gateway
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-zinc-600 border border-black px-3 py-1 bg-zinc-50">
+          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-zinc-700 border-2 border-black px-3 py-1 bg-zinc-50 shadow-[2px_2px_0px_#000000]">
             <span className="w-2 h-2 bg-emerald-500 inline-block animate-pulse" />
-            <span className="font-bold text-black uppercase">PORTAL ONLINE</span>
+            <span className="font-bold uppercase tracking-wider">GATEWAY SECURED</span>
           </div>
 
           {canClose && onClose && (
@@ -181,7 +190,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                 sound.playClick();
                 onClose();
               }}
-              className="p-1.5 border-2 border-black bg-white hover:bg-black hover:text-white transition-colors cursor-pointer blocky-btn font-mono text-xs font-bold flex items-center gap-1"
+              className="p-1.5 border-2 border-black bg-white hover:bg-black hover:text-white transition-colors cursor-pointer font-mono text-xs font-bold flex items-center gap-1 shadow-[2px_2px_0px_#000000]"
               title="Close Portal"
             >
               <X className="w-4 h-4" />
@@ -191,143 +200,102 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
         </div>
       </header>
 
-      {/* Main Content: Split Screen with Assembling Suit Shadow Painting & Blocky Form */}
-      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
+      {/* Main Content: Split Screen with Cyber Security Brand Graphics & Auth Form */}
+      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-12 flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16">
         
-        {/* LEFT COLUMN: Animated Assembling Suit Silhouette Shadow Painting */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center text-center relative select-none">
+        {/* LEFT COLUMN: Clean High-Tech Cyber Security Branding Showcase */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-6">
           
-          {/* Operative Suit Silhouette Shadow Artwork (Layered SVG with Assembly Animations) */}
-          <div className="relative w-72 h-80 sm:w-88 sm:h-96 flex items-center justify-center">
-            
-            {/* Layer 1: Ambient Shadow Aura & Splatter Base */}
-            <div className="absolute inset-0 flex items-center justify-center animate-suit-aura">
-              <svg viewBox="0 0 400 450" className="w-full h-full drop-shadow-[0_20px_25px_rgba(0,0,0,0.15)]">
-                {/* Shadow wash behind operative */}
-                <ellipse cx="200" cy="240" rx="140" ry="170" fill="#f3f4f6" />
-                <path d="M70,390 Q200,430 330,390 L310,430 L90,430 Z" fill="#e5e7eb" opacity="0.6" />
-                {/* Tactical framing brackets */}
-                <path d="M40,50 L40,30 L80,30" stroke="#000000" strokeWidth="2" fill="none" />
-                <path d="M360,50 L360,30 L320,30" stroke="#000000" strokeWidth="2" fill="none" />
-                <path d="M40,380 L40,400 L80,400" stroke="#000000" strokeWidth="2" fill="none" />
-                <path d="M360,380 L360,400 L320,400" stroke="#000000" strokeWidth="2" fill="none" />
-              </svg>
-            </div>
-
-            {/* Layer 2: Main Suit Silhouette (Assembled with CSS animations) */}
-            <svg 
-              viewBox="0 0 400 450" 
-              className="w-full h-full relative z-10"
-              style={{ filter: 'drop-shadow(6px 6px 0px rgba(0,0,0,0.9))' }}
-            >
-              {/* Head & Hair Silhouette Shadow */}
-              <g className="animate-suit-center">
-                {/* Hair contour */}
-                <path 
-                  d="M170,110 C165,70 235,70 230,110 C235,130 220,150 200,155 C180,150 165,130 170,110 Z" 
-                  fill="#000000" 
-                />
-                {/* Jaw & Ear Shadow */}
-                <path 
-                  d="M178,125 L182,145 L200,160 L218,145 L222,125 Z" 
-                  fill="#18181b" 
-                />
-                {/* Neck & Shading */}
-                <path d="M185,148 L185,185 L215,185 L215,148 Z" fill="#27272a" />
-              </g>
-
-              {/* Layer 3: Left Jacket Panel, Shoulder & Sleeve (Slides from Left) */}
-              <g className="animate-suit-left">
-                {/* Left Shoulder & Outer Arm */}
-                <path 
-                  d="M185,180 L90,215 L70,390 L135,405 L155,275 L185,250 Z" 
-                  fill="#09090b" 
-                />
-                {/* Left Lapel Shadow */}
-                <path 
-                  d="M185,180 L135,235 L175,310 L195,310 L185,180 Z" 
-                  fill="#1c1917" 
-                  stroke="#27272a" 
-                  strokeWidth="1"
-                />
-                {/* Left Inner Shadow Crease */}
-                <path d="M140,240 L115,370" stroke="#3f3f46" strokeWidth="1.5" strokeDasharray="3 3" />
-              </g>
-
-              {/* Layer 4: Right Jacket Panel, Shoulder & Pocket Square (Slides from Right) */}
-              <g className="animate-suit-right">
-                {/* Right Shoulder & Outer Arm */}
-                <path 
-                  d="M215,180 L310,215 L330,390 L265,405 L245,275 L215,250 Z" 
-                  fill="#09090b" 
-                />
-                {/* Right Lapel Shadow */}
-                <path 
-                  d="M215,180 L265,235 L225,310 L205,310 L215,180 Z" 
-                  fill="#18181b" 
-                  stroke="#27272a" 
-                  strokeWidth="1"
-                />
-                {/* Crisp White Pocket Square */}
-                <polygon points="260,250 275,245 272,253 258,255" fill="#ffffff" stroke="#000000" strokeWidth="1" />
-                {/* Right Inner Shadow Crease */}
-                <path d="M260,240 L285,370" stroke="#3f3f46" strokeWidth="1.5" strokeDasharray="3 3" />
-              </g>
-
-              {/* Layer 5: High-Contrast Shirt & Collar (Slides down from Center) */}
-              <g className="animate-suit-center">
-                {/* Shirt Chest Triangle */}
-                <polygon points="185,180 215,180 200,285" fill="#f4f4f5" />
-                
-                {/* Left Collar Tip */}
-                <polygon points="185,180 200,205 180,200" fill="#ffffff" stroke="#000000" strokeWidth="1.5" />
-                {/* Right Collar Tip */}
-                <polygon points="215,180 200,205 220,200" fill="#ffffff" stroke="#000000" strokeWidth="1.5" />
-              </g>
-
-              {/* Layer 6: Tailored Black Tie & Clip (Assembles into knot) */}
-              <g className="animate-suit-tie">
-                {/* Tie Knot */}
-                <polygon points="194,202 206,202 204,214 196,214" fill="#000000" />
-                {/* Tie Blade */}
-                <polygon points="196,214 204,214 207,315 200,325 193,315" fill="#000000" />
-                {/* Metallic Silver Tie Bar */}
-                <rect x="195" y="255" width="13" height="2.5" fill="#d4d4d8" stroke="#000000" strokeWidth="0.5" />
-                {/* Jacket Center Button */}
-                <circle cx="200" cy="335" r="4" fill="#27272a" stroke="#000000" strokeWidth="1" />
-              </g>
-            </svg>
+          {/* Cyber Security Emblem & Badge */}
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-zinc-100 border-2 border-black w-fit font-mono text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#000000]">
+            <ShieldCheck className="w-4 h-4 text-black" />
+            <span>Official Institutional Cyber Defense Portal</span>
           </div>
 
-          {/* Slogan & Tactical Status */}
-          <div className="mt-4 space-y-1">
-            <div className="font-mono text-xs font-black uppercase tracking-widest text-zinc-400">
-              OPERATIVE PROFILE // SECURE DOSSIER
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black font-mono uppercase tracking-tight text-black">
-              Elegance in Defense
-            </h2>
-            <p className="text-xs text-zinc-500 font-mono max-w-sm mx-auto">
-              Equip yourself with institutional cyber defense credentials. Authorized for Khaitan students.
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-mono uppercase tracking-tight text-black leading-tight">
+              Train. Defend. <br />
+              <span className="text-zinc-500">Outsmart The Threat.</span>
+            </h1>
+            <p className="text-sm text-zinc-600 font-sans max-w-lg leading-relaxed">
+              Equip yourself with institutional cyber security skills. Learn defensive web browsing, identify typosquatted domains, quarantine social engineering attacks, and compete on the school leaderboard.
             </p>
+          </div>
+
+          {/* Interactive Feature Pills */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="p-3.5 border-2 border-black bg-zinc-50 shadow-[3px_3px_0px_#000000] flex items-start gap-3">
+              <div className="w-8 h-8 bg-black text-white flex items-center justify-center shrink-0">
+                <Lock className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-mono text-xs font-black uppercase text-black">Web Simulator</div>
+                <div className="text-[11px] text-zinc-500 leading-snug mt-0.5">Detect deceptive links, typosquats & malicious downloads.</div>
+              </div>
+            </div>
+
+            <div className="p-3.5 border-2 border-black bg-zinc-50 shadow-[3px_3px_0px_#000000] flex items-start gap-3">
+              <div className="w-8 h-8 bg-black text-white flex items-center justify-center shrink-0">
+                <Shield className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-mono text-xs font-black uppercase text-black">PhishGuard SOC</div>
+                <div className="text-[11px] text-zinc-500 leading-snug mt-0.5">Triage live alerts, quarantine traps & report fraud to 1930.</div>
+              </div>
+            </div>
+
+            <div className="p-3.5 border-2 border-black bg-zinc-50 shadow-[3px_3px_0px_#000000] flex items-start gap-3">
+              <div className="w-8 h-8 bg-black text-white flex items-center justify-center shrink-0">
+                <KeyRound className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-mono text-xs font-black uppercase text-black">Cipher Gauntlet</div>
+                <div className="text-[11px] text-zinc-500 leading-snug mt-0.5">Solve escalating cryptographic password constraints.</div>
+              </div>
+            </div>
+
+            <div className="p-3.5 border-2 border-black bg-zinc-50 shadow-[3px_3px_0px_#000000] flex items-start gap-3">
+              <div className="w-8 h-8 bg-black text-white flex items-center justify-center shrink-0">
+                <Fingerprint className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="font-mono text-xs font-black uppercase text-black">Inspect-Proof Vault</div>
+                <div className="text-[11px] text-zinc-500 leading-snug mt-0.5">Salted hash verification prevents cheating in DevTools.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Guest Mode Notice */}
+          <div className="p-3 bg-amber-50 border-2 border-amber-500/80 text-amber-900 text-xs font-mono flex items-center justify-between gap-3 shadow-[2px_2px_0px_#f59e0b]">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>Playing without signing in? Mini-game results won't save to the leaderboard.</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleGuestContinue}
+              className="px-2.5 py-1 bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold uppercase text-[10px] shrink-0 border border-amber-600 cursor-pointer"
+            >
+              Play As Guest
+            </button>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Ultra-Blocky Sign In / Sign Up Form Card */}
+        {/* RIGHT COLUMN: Clean Cyber Security Sign In / Sign Up Form Card */}
         <div className="w-full lg:w-1/2 max-w-md">
           
-          <div className="bg-white border-2 border-black p-6 sm:p-8 blocky-card relative">
+          <div className="bg-white border-2 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#000000] relative">
             
-            {/* Top Tactical Label */}
-            <div className="flex items-center justify-between border-b-2 border-black pb-3 mb-5">
+            {/* Top Security Header */}
+            <div className="flex items-center justify-between border-b-2 border-black pb-3 mb-6">
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-black" />
-                <span className="font-mono font-black text-sm uppercase tracking-wider">
-                  SECURITY GATEWAY
+                <span className="font-mono font-black text-sm uppercase tracking-wider text-black">
+                  STUDENT ACCESS GATE
                 </span>
               </div>
               <span className="font-mono text-[10px] bg-black text-white px-2 py-0.5 font-bold uppercase">
-                AUTH REQUIRED
+                {authMode === 'signin' ? 'AUTHENTICATION' : 'REGISTRATION'}
               </span>
             </div>
 
@@ -362,13 +330,13 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     : 'bg-white text-zinc-600 hover:text-black hover:bg-zinc-100'
                 }`}
               >
-                CADET ENROLLMENT
+                CADET ENLISTMENT
               </button>
             </div>
 
             {/* Error Banner */}
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border-2 border-red-600 text-red-700 font-mono text-xs flex items-start gap-2">
+              <div className="mb-4 p-3 bg-red-50 border-2 border-red-600 text-red-700 font-mono text-xs flex items-start gap-2 shadow-[2px_2px_0px_#dc2626]">
                 <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                 <span className="font-bold">{error}</span>
               </div>
@@ -399,30 +367,30 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                       setEmail(e.target.value);
                       setError(null);
                     }}
-                    className="w-full bg-zinc-50 border-2 border-black px-3.5 py-2.5 font-mono text-xs text-black placeholder-zinc-400 font-bold focus:bg-white transition-colors"
+                    className="w-full bg-zinc-50 border-2 border-black px-3.5 py-2.5 font-mono text-xs text-black placeholder-zinc-400 font-bold focus:bg-white transition-colors shadow-[2px_2px_0px_#000000]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer blocky-btn mt-2"
+                  className="w-full py-3 px-4 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 mt-2"
                 >
-                  <span>ACCESS TERMINAL</span>
+                  <span>SIGN IN TO CADET ACCOUNT</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
-                {/* Quick Enrolled Cadets Roster (Testing & Demo Convenience) */}
+                {/* Quick Enrolled Cadets Roster (Convenience) */}
                 {existingStudents.length > 0 && (
                   <div className="pt-4 border-t-2 border-zinc-200 mt-5">
                     <div className="font-mono text-[10px] text-zinc-500 font-black uppercase tracking-wider mb-2 flex items-center gap-1">
                       <UserCheck className="w-3 h-3" /> REGISTERED CADETS ON THIS DEVICE:
                     </div>
-                    <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1">
-                      {existingStudents.slice(0, 3).map((st) => (
+                    <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+                      {existingStudents.slice(0, 4).map((st) => (
                         <div
                           key={st.id}
                           onClick={() => handleSelectCadet(st)}
-                          className="flex items-center justify-between p-2 border border-black bg-zinc-50 hover:bg-black hover:text-white transition-colors cursor-pointer text-xs font-mono group"
+                          className="flex items-center justify-between p-2 border-2 border-black bg-zinc-50 hover:bg-black hover:text-white transition-colors cursor-pointer text-xs font-mono group shadow-[2px_2px_0px_#000000]"
                         >
                           <span className="font-bold truncate">{st.name} (Class {st.grade}-{st.section})</span>
                           <span className="text-[10px] text-zinc-500 group-hover:text-zinc-300 font-bold shrink-0 ml-2">
@@ -433,6 +401,17 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     </div>
                   </div>
                 )}
+
+                {/* Continue as Guest Button */}
+                <div className="pt-3 text-center">
+                  <button
+                    type="button"
+                    onClick={handleGuestContinue}
+                    className="text-xs font-mono text-zinc-500 hover:text-black underline cursor-pointer"
+                  >
+                    Continue as Guest (No score saving)
+                  </button>
+                </div>
               </form>
             )}
 
@@ -454,7 +433,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                       setName(e.target.value);
                       setError(null);
                     }}
-                    className="w-full bg-zinc-50 border-2 border-black px-3.5 py-2.5 font-mono text-xs text-black placeholder-zinc-400 font-bold focus:bg-white transition-colors"
+                    className="w-full bg-zinc-50 border-2 border-black px-3.5 py-2.5 font-mono text-xs text-black placeholder-zinc-400 font-bold focus:bg-white transition-colors shadow-[2px_2px_0px_#000000]"
                   />
                 </div>
 
@@ -481,7 +460,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                       setEmail(e.target.value);
                       setError(null);
                     }}
-                    className="w-full bg-zinc-50 border-2 border-black px-3.5 py-2.5 font-mono text-xs text-black placeholder-zinc-400 font-bold focus:bg-white transition-colors"
+                    className="w-full bg-zinc-50 border-2 border-black px-3.5 py-2.5 font-mono text-xs text-black placeholder-zinc-400 font-bold focus:bg-white transition-colors shadow-[2px_2px_0px_#000000]"
                   />
                 </div>
 
@@ -494,7 +473,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     <select
                       value={grade}
                       onChange={(e) => setGrade(e.target.value as ClassGrade)}
-                      className="w-full bg-zinc-50 border-2 border-black px-3 py-2.5 font-mono text-xs text-black font-bold cursor-pointer focus:bg-white"
+                      className="w-full bg-zinc-50 border-2 border-black px-3 py-2.5 font-mono text-xs text-black font-bold cursor-pointer focus:bg-white shadow-[2px_2px_0px_#000000]"
                     >
                       {['6', '7', '8', '9', '10', '11', '12'].map((g) => (
                         <option key={g} value={g}>
@@ -511,7 +490,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     <select
                       value={section}
                       onChange={(e) => setSection(e.target.value as ClassSection)}
-                      className="w-full bg-zinc-50 border-2 border-black px-3 py-2.5 font-mono text-xs text-black font-bold cursor-pointer focus:bg-white"
+                      className="w-full bg-zinc-50 border-2 border-black px-3 py-2.5 font-mono text-xs text-black font-bold cursor-pointer focus:bg-white shadow-[2px_2px_0px_#000000]"
                     >
                       {['A', 'B', 'C', 'D', 'E', 'F'].map((s) => (
                         <option key={s} value={s}>
@@ -528,11 +507,22 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
 
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer blocky-btn mt-2"
+                  className="w-full py-3 px-4 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 mt-2"
                 >
                   <Check className="w-4 h-4 text-emerald-400" />
                   <span>INITIALIZE OPERATIVE ACCOUNT</span>
                 </button>
+
+                {/* Continue as Guest Button */}
+                <div className="pt-2 text-center">
+                  <button
+                    type="button"
+                    onClick={handleGuestContinue}
+                    className="text-xs font-mono text-zinc-500 hover:text-black underline cursor-pointer"
+                  >
+                    Continue as Guest (No score saving)
+                  </button>
+                </div>
               </form>
             )}
           </div>
@@ -551,3 +541,4 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
     </div>
   );
 };
+

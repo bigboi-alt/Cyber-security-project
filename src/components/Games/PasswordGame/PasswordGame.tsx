@@ -35,7 +35,7 @@ const ROMAN_VALUES: Record<string, number> = {
   M: 1000
 };
 
-export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) => {
+export const PasswordGame: React.FC<PasswordGameProps> = ({ student, onPointsEarned }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const [twoFactorToken, setTwoFactorToken] = useState('7842');
@@ -237,13 +237,20 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
           </div>
         </div>
 
-        {/* 2FA token with Comic Anime Ticker */}
-        <div className="flex items-center gap-2.5 bg-[#141418] px-3.5 py-1.5 rounded-none border-2 border-zinc-800 font-mono text-xs comic-shadow-sm">
-          <span className="text-zinc-500 font-bold uppercase text-[10px]">2FA TOKEN:</span>
-          <span className="text-white font-black tracking-widest text-sm">{twoFactorToken}</span>
-          <span className="text-zinc-400 flex items-center gap-1 border-l border-zinc-800 pl-2 text-[11px] font-bold">
-            <Clock className="w-3 h-3 text-[#9d9e99]" /> {twoFactorTimer}s
-          </span>
+        <div className="flex items-center gap-2">
+          {!student && (
+            <div className="hidden sm:inline-block px-2.5 py-1.5 bg-amber-950/60 border-2 border-amber-500/60 text-amber-300 text-[10px] font-mono font-bold uppercase">
+              Guest (No Save)
+            </div>
+          )}
+          {/* 2FA token with Comic Anime Ticker */}
+          <div className="flex items-center gap-2.5 bg-[#141418] px-3.5 py-1.5 rounded-none border-2 border-zinc-800 font-mono text-xs comic-shadow-sm">
+            <span className="text-zinc-500 font-bold uppercase text-[10px]">2FA TOKEN:</span>
+            <span className="text-white font-black tracking-widest text-sm">{twoFactorToken}</span>
+            <span className="text-zinc-400 flex items-center gap-1 border-l border-zinc-800 pl-2 text-[11px] font-bold">
+              <Clock className="w-3 h-3 text-[#9d9e99]" /> {twoFactorTimer}s
+            </span>
+          </div>
         </div>
       </div>
 
@@ -352,7 +359,13 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
             ALL 15 CIPHER RULES SATISFIED! // COMPLETED
           </h4>
           <p className="text-xs text-zinc-300">
-            You forged an impenetrable cryptographic key. +300 bonus XP logged to your class.
+            {student ? (
+              <>You forged an impenetrable cryptographic key. +300 bonus XP logged to your class.</>
+            ) : (
+              <span className="text-amber-400 font-mono font-bold">
+                Guest Mode: You cleared all 15 rules, but your score is NOT logged to the leaderboard. Sign in to save your ranking!
+              </span>
+            )}
           </p>
         </div>
       )}

@@ -19,6 +19,7 @@ import {
   saveOrUpdateStudent, 
   addPointsToCurrentStudent 
 } from './utils/storage';
+import { AlertTriangle } from 'lucide-react';
 import { sound } from './utils/sound';
 
 export function App() {
@@ -86,6 +87,27 @@ export function App() {
         />
 
         <main className={`flex-1 w-full mx-auto ${activeTab === 'hunt' ? 'max-w-[1850px] px-2 sm:px-4' : 'max-w-6xl px-4 sm:px-6'} pt-4 pb-10 transition-all`}>
+          {/* Unauthenticated Guest Warning Banner */}
+          {!currentStudent && (
+            <div className="mb-4 bg-amber-950/40 border-2 border-amber-500/70 p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono shadow-[4px_4px_0px_#000000] animate-in fade-in">
+              <div className="flex items-start sm:items-center gap-2.5">
+                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
+                <div>
+                  <span className="font-black text-amber-300 uppercase tracking-wide">GUEST MODE: </span>
+                  <span className="text-zinc-300">
+                    You are not signed in. Playing mini-games in guest mode <strong>will not record your results, points, or badges</strong> to the school leaderboard.
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsLoginOpen(true)}
+                className="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-300 text-black font-black uppercase text-xs shrink-0 cursor-pointer transition-colors shadow-[2px_2px_0px_#000000] self-start sm:self-auto"
+              >
+                Sign In / Enlist
+              </button>
+            </div>
+          )}
+
           {activeTab === 'dashboard' && (
             <StudentDashboard
               student={currentStudent}

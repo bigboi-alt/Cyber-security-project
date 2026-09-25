@@ -24,37 +24,26 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   onNavigateTab,
   onOpenLogin,
 }) => {
-  if (!student) {
-    return (
-      <div className="max-w-lg mx-auto text-center py-20 px-4">
-        <div className="w-14 h-14 rounded-none bg-[#0e0e12] border-2 border-zinc-700 flex items-center justify-center text-white mx-auto mb-4 comic-shadow">
-          <ShieldCheck className="w-7 h-7 text-[#9d9e99]" />
-        </div>
-        <div className="inline-block px-3 py-1 mb-3 text-[11px] font-mono uppercase tracking-widest text-[#9d9e99] border border-zinc-800 bg-zinc-900/80">
-          [ ACCESS REQUIRED // ENROLLMENT LOCK ]
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white mb-2 font-mono uppercase">
-          NEXUM CYBER DEFENSE
-        </h2>
-        <p className="text-zinc-400 text-xs leading-relaxed mb-6 max-w-sm mx-auto">
-          Authenticate with your school credentials (<code className="text-zinc-200 font-mono">@thekhaitanschool.org</code>) to access active simulation sandboxes and track operative clearance.
-        </p>
-        <button
-          onClick={() => {
-            sound.playClick();
-            onOpenLogin();
-          }}
-          className="px-6 py-3 rounded-none bg-white hover:bg-zinc-200 text-black font-black text-xs transition-transform active:translate-y-0.5 cursor-pointer inline-flex items-center gap-2 comic-shadow blocky-btn"
-        >
-          <span>AUTHENTICATE OPERATIVE</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
-      </div>
-    );
-  }
+  const isGuest = !student;
+  const displayStudent: StudentProfile = student || {
+    id: 'guest',
+    name: 'Unenrolled Cadet',
+    email: 'guest@thekhaitanschool.org',
+    grade: '10',
+    section: 'A',
+    avatar: 'Student',
+    points: 0,
+    easterEggsFound: [],
+    completedQuizzes: [],
+    huntLevelReached: 1,
+    passwordGameHighScore: 0,
+    phishGuardScore: 0,
+    joinedAt: new Date().toISOString(),
+    badges: ['Guest Operative']
+  };
 
   // Detect which tasks are completed based on points / badges
-  const badges = student.badges || [];
+  const badges = displayStudent.badges || [];
   const hasQuizBadge = badges.some(b => b.includes('Quiz') || b.includes('Scholar') || b.includes('Analyst'));
   const hasPasswordBadge = badges.some(b => b.includes('Password') || b.includes('Cipher') || b.includes('Crypt'));
   const hasPhishGuardBadge = badges.some(b => b.includes('Guardian') || b.includes('SOC') || b.includes('Sentinel'));
@@ -65,27 +54,27 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     {
       id: 'browser-amazon',
       title: 'E-Commerce Typosquat Defense',
-      isCompleted: badges.some(b => b.includes('Safe Shopper')) || student.points >= 150,
+      isCompleted: badges.some(b => b.includes('Safe Shopper')) || displayStudent.points >= 150,
     },
     {
       id: 'browser-tmail',
       title: 'Email Credential Harvesting Defense',
-      isCompleted: badges.some(b => b.includes('Phish')) || student.points >= 300,
+      isCompleted: badges.some(b => b.includes('Phish')) || displayStudent.points >= 300,
     },
     {
       id: 'browser-cloud',
       title: 'Cloud Malvertising Defense',
-      isCompleted: badges.some(b => b.includes('Navigator')) || student.points >= 500,
+      isCompleted: badges.some(b => b.includes('Navigator')) || displayStudent.points >= 500,
     },
     {
       id: 'quiz',
       title: 'Scenario-Based Threat Quiz',
-      isCompleted: hasQuizBadge || student.points >= 600,
+      isCompleted: hasQuizBadge || displayStudent.points >= 600,
     },
     {
       id: 'password',
       title: 'Cryptographic Password Construction',
-      isCompleted: hasPasswordBadge || student.points >= 750,
+      isCompleted: hasPasswordBadge || displayStudent.points >= 750,
     },
     {
       id: 'phishguard',
@@ -119,15 +108,28 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           <div className="space-y-3.5 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-none bg-zinc-900 border border-zinc-700 text-[#9d9e99] font-bold">
-                [ CLASS {student.grade}-{student.section} ]
+                [ CLASS {displayStudent.grade}-{displayStudent.section} ]
               </span>
               <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
-                ID: {student.email}
+                ID: {displayStudent.email}
               </span>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-none border border-emerald-600/60 flex items-center gap-1 font-bold">
-                <span className="w-1.5 h-1.5 rounded-none bg-emerald-400 animate-pulse" />
-                VERIFIED // ACTIVE STATUS
-              </span>
+              {isGuest ? (
+                <button
+                  onClick={() => {
+                    sound.playClick();
+                    onOpenLogin();
+                  }}
+                  className="text-[10px] font-mono text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-none border border-amber-600/60 flex items-center gap-1 font-bold cursor-pointer hover:bg-amber-900/60 transition-colors"
+                >
+                  <span className="w-1.5 h-1.5 rounded-none bg-amber-400 animate-pulse" />
+                  GUEST SESSION // AUTH TO RECORD RESULTS →
+                </button>
+              ) : (
+                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-none border border-emerald-600/60 flex items-center gap-1 font-bold">
+                  <span className="w-1.5 h-1.5 rounded-none bg-emerald-400 animate-pulse" />
+                  VERIFIED // ACTIVE STATUS
+                </span>
+              )}
             </div>
 
             <div>
@@ -135,7 +137,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 CADET OPERATIVE // IDENTIFIER
               </div>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-mono uppercase">
-                {student.name}
+                {displayStudent.name}
               </h1>
             </div>
 
@@ -176,7 +178,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 Score Accumulation
               </div>
               <div className="text-2xl sm:text-3xl font-black text-white font-mono mt-1">
-                {student.points}
+                {displayStudent.points}
               </div>
               <div className="text-[10px] text-zinc-500 font-mono mt-0.5">
                 XP CREDITED

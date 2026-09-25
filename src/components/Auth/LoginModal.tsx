@@ -22,7 +22,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       onLoginSuccess={onLoginSuccess}
       existingStudents={existingStudents}
       onClose={onClose}
-      canClose={existingStudents.length > 0}
+      canClose={true}
     />
   );
 };

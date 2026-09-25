@@ -126,7 +126,7 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
   }
 ];
 
-export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
+export const CyberQuiz: React.FC<CyberQuizProps> = ({ student, onPointsEarned }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
@@ -199,6 +199,9 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
         <div className="text-right font-mono">
           <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Earned XP</div>
           <div className="text-base font-black text-white">{score} pts</div>
+          {!student && (
+            <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Guest (Not Saved)</div>
+          )}
         </div>
       </div>
 
@@ -368,7 +371,13 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
             EVALUATION CONCLUDED // OPERATION FINISHED
           </h3>
           <p className="text-xs text-zinc-400">
-            You achieved an operative score of <strong className="text-white font-mono">{score} points</strong>. All telemetry has been recorded to your class dossier.
+            {student ? (
+              <>You achieved an operative score of <strong className="text-white font-mono">{score} points</strong>. All telemetry has been recorded to your class dossier.</>
+            ) : (
+              <span className="text-amber-400 font-mono font-bold">
+                Guest Mode: You achieved {score} points, but results are NOT recorded on the leaderboard. Sign in to save future attempts!
+              </span>
+            )}
           </p>
           <button
             onClick={handleRestart}

@@ -89,7 +89,7 @@ const INCIDENTS: PhishIncident[] = [
   }
 ];
 
-export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
+export const PhishGuard: React.FC<PhishGuardProps> = ({ student, onPointsEarned }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(15);
@@ -183,6 +183,9 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
         <div className="text-right font-mono">
           <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Triage Score</div>
           <div className="text-base font-black text-white">{score} pts</div>
+          {!student && (
+            <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Guest (Not Saved)</div>
+          )}
         </div>
       </div>
 
@@ -310,7 +313,13 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
             SOC TRIAGE COMPLETED // MISSION COMPLETE
           </h4>
           <p className="text-xs text-zinc-400">
-            You scored <strong className="text-white font-mono">{score} points</strong>. All points have been credited to your class.
+            {student ? (
+              <>You scored <strong className="text-white font-mono">{score} points</strong>. All points have been credited to your class.</>
+            ) : (
+              <span className="text-amber-400 font-mono font-bold">
+                Guest Mode: You scored {score} points, but scores are NOT credited to the leaderboard. Sign in to save your progress!
+              </span>
+            )}
           </p>
           <button
             onClick={handleRestart}
