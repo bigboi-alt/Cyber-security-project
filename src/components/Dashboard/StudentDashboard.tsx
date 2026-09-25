@@ -1,17 +1,14 @@
 import React from 'react';
 import { 
-  Trophy, 
   Globe, 
   KeyRound, 
   FileQuestion, 
   ArrowRight, 
   ShieldAlert,
-  CheckCircle2,
-  Clock,
-  Sparkles,
-  BookOpen,
-  ShieldCheck,
-  Award
+  Sparkles, 
+  ShieldCheck, 
+  Award,
+  Zap
 } from 'lucide-react';
 import type { StudentProfile } from '../../types';
 import { sound } from '../../utils/sound';
@@ -29,24 +26,27 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 }) => {
   if (!student) {
     return (
-      <div className="max-w-xl mx-auto text-center py-20 px-4">
-        <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-700/80 flex items-center justify-center text-white mx-auto mb-4 shadow-inner">
-          <ShieldCheck className="w-6 h-6 text-[#9d9e99]" />
+      <div className="max-w-lg mx-auto text-center py-20 px-4">
+        <div className="w-14 h-14 rounded-lg bg-[#0e0e12] border-2 border-zinc-700 flex items-center justify-center text-white mx-auto mb-4 comic-shadow">
+          <ShieldCheck className="w-7 h-7 text-[#9d9e99]" />
         </div>
-        <h2 className="text-2xl font-black tracking-tight text-white mb-2">
-          NEXUM CYBER PORTAL
+        <div className="inline-block px-3 py-1 mb-3 text-[11px] font-mono uppercase tracking-widest text-[#9d9e99] border border-zinc-800 bg-zinc-900/80">
+          [ ACCESS REQUIRED // ログイン必要 ]
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white mb-2 font-mono uppercase">
+          NEXUM CYBER DEFENSE
         </h2>
         <p className="text-zinc-400 text-xs leading-relaxed mb-6 max-w-sm mx-auto">
-          Sign in with your registered school email (<code className="text-[#9d9e99] font-mono">@thekhaitanschool.org</code>) to access interactive browser simulations, password defense challenges, and track your tasks.
+          Authenticate with your school credentials (<code className="text-zinc-200 font-mono">@thekhaitanschool.org</code>) to access active simulation sandboxes and track operative clearance.
         </p>
         <button
           onClick={() => {
             sound.playClick();
             onOpenLogin();
           }}
-          className="px-6 py-3 rounded-xl bg-white hover:bg-zinc-200 text-black font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-2 shadow-lg"
+          className="px-6 py-3 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs transition-transform active:translate-y-0.5 cursor-pointer inline-flex items-center gap-2 comic-shadow"
         >
-          <span>Student Sign In</span>
+          <span>AUTHENTICATE OPERATIVE</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -55,7 +55,6 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   // Detect which tasks are completed based on points / badges
   const badges = student.badges || [];
-  const hasHuntBadge = badges.some(b => b.includes('Safe Shopper') || b.includes('Phish') || b.includes('Navigator'));
   const hasQuizBadge = badges.some(b => b.includes('Quiz') || b.includes('Scholar') || b.includes('Analyst'));
   const hasPasswordBadge = badges.some(b => b.includes('Password') || b.includes('Cipher') || b.includes('Crypt'));
   const hasPhishGuardBadge = badges.some(b => b.includes('Guardian') || b.includes('SOC') || b.includes('Sentinel'));
@@ -66,65 +65,37 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     {
       id: 'browser-amazon',
       title: 'E-Commerce Typosquat Defense',
-      category: 'Browser Simulator',
-      tab: 'hunt',
-      points: 150,
       isCompleted: badges.some(b => b.includes('Safe Shopper')) || student.points >= 150,
-      description: 'Search Google for Amazon, avoid typosquatted domain (amazon.ti), and order verified textbook.'
     },
     {
       id: 'browser-tmail',
       title: 'Email Credential Harvesting Defense',
-      category: 'Browser Simulator',
-      tab: 'hunt',
-      points: 150,
       isCompleted: badges.some(b => b.includes('Phish')) || student.points >= 300,
-      description: 'Inspect Kabir birthday invite in Tmail, spot fraudulent RSVP password trap, and close safely.'
     },
     {
       id: 'browser-cloud',
       title: 'Cloud Malvertising Defense',
-      category: 'Browser Simulator',
-      tab: 'hunt',
-      points: 200,
       isCompleted: badges.some(b => b.includes('Navigator')) || student.points >= 500,
-      description: 'Navigate to School Cloud and bypass fake high-speed setup .exe ads to acquire the genuine project PDF.'
     },
     {
       id: 'quiz',
       title: 'Scenario-Based Threat Quiz',
-      category: 'Security Quiz',
-      tab: 'quiz',
-      points: 500,
       isCompleted: hasQuizBadge || student.points >= 600,
-      description: 'Analyze real-life email circulars, deceptive SMS links, and public charging station attacks.'
     },
     {
       id: 'password',
       title: 'Cryptographic Password Construction',
-      category: 'Password Game',
-      tab: 'password',
-      points: 750,
       isCompleted: hasPasswordBadge || student.points >= 750,
-      description: 'Build a compliant password satisfying Roman numeral sums, 2FA OTP synchronization, and port numbers.'
     },
     {
       id: 'phishguard',
       title: 'SOC Incident Triage Center',
-      category: 'PhishGuard',
-      tab: 'phishguard',
-      points: 500,
       isCompleted: hasPhishGuardBadge,
-      description: 'Act as cyber defender under time pressure: analyze raw emails and allow or quarantine attacks.'
     },
     {
       id: 'intel-checklist',
       title: 'Operational Cyber Hygiene Checklist',
-      category: 'Cyber Guide',
-      tab: 'intel',
-      points: 150,
       isCompleted: hasChecklistBadge,
-      description: 'Review the Google Classroom safety modules and certify your school device compliance.'
     }
   ];
 
@@ -133,238 +104,273 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   return (
     <div className="space-y-6 pb-12 animate-in fade-in duration-200">
       
-      {/* 1. Black Blocky User & Class Header Block */}
-      <div className="rounded-2xl bg-[#0c0c0e] border border-zinc-800 p-6 sm:p-7 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+      {/* 1. Manga Operative Dossier Header (Consolidated, Zero Duplicate Clutter) */}
+      <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-6 sm:p-7 comic-shadow relative overflow-hidden">
+        {/* Subtle Manga Accent Corner */}
+        <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none overflow-hidden">
+          <div className="absolute top-2 right-2 text-[10px] font-mono text-zinc-700 tracking-widest uppercase">
+            // OPS
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
-          {/* User & Class Details */}
-          <div className="space-y-2">
+          {/* Operative Identity & Progress */}
+          <div className="space-y-3.5 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-[#9d9e99]">
-                Class {student.grade} • Section {student.section}
+              <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-[#9d9e99] font-bold">
+                [ CLASS {student.grade}-{student.section} ]
               </span>
-              <span className="text-[11px] font-mono text-zinc-500">
-                {student.email}
+              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
+                ID: {student.email}
+              </span>
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-600/60 flex items-center gap-1 font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                VERIFIED // 認証済み
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-              Welcome, {student.name}
-            </h1>
+            <div>
+              <div className="text-[11px] font-mono text-zinc-400 tracking-wider uppercase mb-0.5">
+                CADET OPERATIVE // 隊員名
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-mono uppercase">
+                {student.name}
+              </h1>
+            </div>
 
-            <p className="text-xs text-zinc-400 max-w-xl leading-relaxed">
-              Your student telemetry and completed defense activities are recorded below. All points contribute to your personal rank and Class {student.grade}-{student.section} standings.
-            </p>
+            {/* Integrated Segmented Manga Progress Gauge */}
+            <div className="space-y-1.5 pt-1 max-w-lg">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-zinc-400 uppercase tracking-wider font-semibold flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-white" />
+                  <span>Mission Clearance Progress</span>
+                </span>
+                <span className="font-bold text-white tracking-wider">
+                  {completedTasksCount} / {tasks.length} CLEARED
+                </span>
+              </div>
+
+              {/* Segmented Comic Gauge Bar */}
+              <div className="flex items-center gap-1.5 pt-0.5">
+                {tasks.map((t, idx) => (
+                  <div
+                    key={t.id}
+                    title={`${t.title}: ${t.isCompleted ? 'Cleared' : 'Pending'}`}
+                    className={`h-3 flex-1 rounded-sm border transition-all ${
+                      t.isCompleted
+                        ? 'bg-white border-white comic-shadow-sm'
+                        : 'bg-zinc-900/90 border-zinc-800'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Blocky Score Metrics */}
+          {/* High-Contrast Comic Stat Blocks */}
           <div className="flex items-center gap-3 shrink-0">
-            {/* Points Block */}
-            <div className="p-4 rounded-xl bg-[#121215] border border-zinc-800 text-center min-w-[120px]">
-              <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99]">
-                Personal Points
+            {/* Score Block */}
+            <div className="p-4 rounded-xl bg-[#121216] border-2 border-zinc-800 text-center min-w-[130px] comic-shadow">
+              <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99] font-bold">
+                Score Accumulation
               </div>
               <div className="text-2xl sm:text-3xl font-black text-white font-mono mt-1">
                 {student.points}
               </div>
               <div className="text-[10px] text-zinc-500 font-mono mt-0.5">
-                pts accumulated
-              </div>
-            </div>
-
-            {/* Completed Tasks Block */}
-            <div className="p-4 rounded-xl bg-[#121215] border border-zinc-800 text-center min-w-[120px]">
-              <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99]">
-                Tasks Cleared
-              </div>
-              <div className="text-2xl sm:text-3xl font-black text-green-400 font-mono mt-1">
-                {completedTasksCount}/{tasks.length}
-              </div>
-              <div className="text-[10px] text-zinc-500 font-mono mt-0.5">
-                {Math.round((completedTasksCount / tasks.length) * 100)}% complete
+                XP CREDITED
               </div>
             </div>
 
             {/* Badges Block */}
-            <div className="p-4 rounded-xl bg-[#121215] border border-zinc-800 text-center min-w-[110px]">
-              <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99]">
-                Badges Earned
+            <div className="p-4 rounded-xl bg-[#121216] border-2 border-zinc-800 text-center min-w-[120px] comic-shadow">
+              <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99] font-bold">
+                Badges Unlocked
               </div>
               <div className="text-2xl sm:text-3xl font-black text-white font-mono mt-1">
                 {badges.length}
               </div>
               <div className="text-[10px] text-zinc-500 font-mono mt-0.5">
-                credentials
+                CREDENTIALS
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 2. Simple Activity Progress Block */}
-      <div className="rounded-2xl bg-[#0c0c0e] border border-zinc-800 p-6 sm:p-7 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-        <div className="space-y-1">
-          <div className="text-[10px] font-mono uppercase tracking-widest text-[#9d9e99]">
-            Activity Progress
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-green-400" />
-            <span>Modules & Tasks Completed</span>
-          </h2>
-          <p className="text-xs text-zinc-400">
-            Progress tracked across simulation modules, threat scenarios, and operational exercises.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-5 bg-[#121215] border border-zinc-800 px-6 py-4 rounded-xl shrink-0">
-          <div className="text-right">
-            <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99]">
-              Status
-            </div>
-            <div className="text-xs text-zinc-400 font-mono">
-              Completed
-            </div>
-          </div>
-          <div className="h-10 w-px bg-zinc-800" />
-          <div className="font-mono text-3xl sm:text-4xl font-black text-white tracking-tight">
-            {completedTasksCount}<span className="text-zinc-500 font-normal text-2xl">/{tasks.length}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. Badges Earned Block */}
+      {/* 2. Manga Badges Showcase (Comic Action Stamps) */}
       {badges.length > 0 && (
-        <div className="rounded-2xl bg-[#0c0c0e] border border-zinc-800 p-6 space-y-3">
-          <div className="flex items-center gap-2">
-            <Award className="w-4 h-4 text-[#9d9e99]" />
-            <h3 className="text-sm font-bold text-white tracking-tight">
-              Unlocked Badges & Certifications
-            </h3>
+        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 sm:p-6 comic-shadow space-y-3">
+          <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+            <div className="flex items-center gap-2">
+              <Award className="w-4 h-4 text-white" />
+              <h3 className="text-xs font-black text-white tracking-widest uppercase font-mono">
+                [ UNLOCKED CREDENTIALS // 獲得バッジ ]
+              </h3>
+            </div>
+            <span className="text-[10px] font-mono text-zinc-400">
+              {badges.length} ISSUED
+            </span>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-1">
+          <div className="flex flex-wrap gap-2.5 pt-1">
             {badges.map((badge, i) => (
               <div 
                 key={i}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-mono text-zinc-200 shadow-sm"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border-2 border-zinc-700 text-xs font-mono text-white comic-shadow-sm font-semibold hover:border-zinc-400 transition-colors"
               >
-                <Sparkles className="w-3 h-3 text-[#9d9e99]" />
-                <span className="font-semibold">{badge}</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#9d9e99]" />
+                <span>{badge}</span>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* 4. Quick Activity Launcher Blocks */}
+      {/* 3. Manga Chapter Operations (4 Streamlined Defense Modules) */}
       <div>
-        <div className="text-[10px] font-mono uppercase tracking-widest text-[#9d9e99] mb-1">
-          Cyber Defense Modules
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-[#9d9e99] font-bold">
+              [ TACTICAL MODULES // 作戦演習 ]
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-zinc-500">
+            SIMULATION SANDBOX READY
+          </span>
         </div>
-        <h3 className="text-base font-bold text-white mb-3 tracking-tight">
-          Launch Interactive Training Modules
-        </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-          {/* Browser Simulator */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* ACT 01: Browser Simulator */}
           <div
             onClick={() => {
               sound.playClick();
               onNavigateTab('hunt');
             }}
-            className="p-4 rounded-xl bg-[#0c0c0e] border border-zinc-800 hover:border-zinc-500 transition-all cursor-pointer group flex flex-col justify-between"
+            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
           >
             <div>
-              <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white mb-3 group-hover:border-[#9d9e99] transition-colors">
-                <Globe className="w-4 h-4 text-white" />
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                  ACT.01
+                </span>
+                <Globe className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
               </div>
-              <h4 className="text-xs font-bold text-white group-hover:text-white transition-colors">
+
+              <h4 className="text-sm font-black text-white font-mono uppercase mb-1.5 tracking-tight group-hover:text-white transition-colors">
                 Browser Simulator
               </h4>
-              <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-                Full-screen browser with Google, Tmail, and Amazon threat defense scenarios.
+              <p className="text-[11px] text-zinc-400 leading-relaxed">
+                Neutralize typosquats, credential traps in spoofed Tmail, and cloud malvertising traps.
               </p>
             </div>
-            <div className="mt-4 pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-[#9d9e99]">
-              <span>+500 pts total</span>
-              <span className="text-white flex items-center gap-1">Launch <ArrowRight className="w-3 h-3" /></span>
+
+            <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono">
+              <span className="text-[10px] text-zinc-500 uppercase font-semibold">Web Sandbox</span>
+              <span className="text-white font-bold group-hover:underline flex items-center gap-1 text-[11px]">
+                DEPLOY <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
           </div>
 
-          {/* Password Game */}
-          <div
-            onClick={() => {
-              sound.playClick();
-              onNavigateTab('password');
-            }}
-            className="p-4 rounded-xl bg-[#0c0c0e] border border-zinc-800 hover:border-zinc-500 transition-all cursor-pointer group flex flex-col justify-between"
-          >
-            <div>
-              <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white mb-3 group-hover:border-[#9d9e99] transition-colors">
-                <KeyRound className="w-4 h-4 text-white" />
-              </div>
-              <h4 className="text-xs font-bold text-white group-hover:text-white transition-colors">
-                Password Game
-              </h4>
-              <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-                15 rule progressive cryptographic password builder with live Roman sums.
-              </p>
-            </div>
-            <div className="mt-4 pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-[#9d9e99]">
-              <span>+750 pts total</span>
-              <span className="text-white flex items-center gap-1">Play <ArrowRight className="w-3 h-3" /></span>
-            </div>
-          </div>
-
-          {/* Quiz */}
-          <div
-            onClick={() => {
-              sound.playClick();
-              onNavigateTab('quiz');
-            }}
-            className="p-4 rounded-xl bg-[#0c0c0e] border border-zinc-800 hover:border-zinc-500 transition-all cursor-pointer group flex flex-col justify-between"
-          >
-            <div>
-              <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white mb-3 group-hover:border-[#9d9e99] transition-colors">
-                <FileQuestion className="w-4 h-4 text-white" />
-              </div>
-              <h4 className="text-xs font-bold text-white group-hover:text-white transition-colors">
-                Security Quiz
-              </h4>
-              <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-                Visual scenarios with simulated school circulars, URLs, and QR code traps.
-              </p>
-            </div>
-            <div className="mt-4 pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-[#9d9e99]">
-              <span>+500 pts total</span>
-              <span className="text-white flex items-center gap-1">Start <ArrowRight className="w-3 h-3" /></span>
-            </div>
-          </div>
-
-          {/* PhishGuard */}
+          {/* ACT 02: PhishGuard SOC */}
           <div
             onClick={() => {
               sound.playClick();
               onNavigateTab('phishguard');
             }}
-            className="p-4 rounded-xl bg-[#0c0c0e] border border-zinc-800 hover:border-zinc-500 transition-all cursor-pointer group flex flex-col justify-between"
+            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
           >
             <div>
-              <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white mb-3 group-hover:border-[#9d9e99] transition-colors">
-                <ShieldAlert className="w-4 h-4 text-white" />
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                  ACT.02
+                </span>
+                <ShieldAlert className="w-4 h-4 text-zinc-400 group-hover:text-rose-400 transition-colors" />
               </div>
-              <h4 className="text-xs font-bold text-white group-hover:text-white transition-colors">
+
+              <h4 className="text-sm font-black text-white font-mono uppercase mb-1.5 tracking-tight group-hover:text-white transition-colors">
                 PhishGuard SOC
               </h4>
-              <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed">
-                Rapid triage console: analyze email headers and isolate cyber threats.
+              <p className="text-[11px] text-zinc-400 leading-relaxed">
+                Operate the high-speed security terminal: triage incoming circulars under time pressure.
               </p>
             </div>
-            <div className="mt-4 pt-2.5 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-[#9d9e99]">
-              <span>+500 pts total</span>
-              <span className="text-white flex items-center gap-1">Open <ArrowRight className="w-3 h-3" /></span>
+
+            <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono">
+              <span className="text-[10px] text-zinc-500 uppercase font-semibold">SOC Terminal</span>
+              <span className="text-white font-bold group-hover:underline flex items-center gap-1 text-[11px]">
+                DEPLOY <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
           </div>
+
+          {/* ACT 03: Password Gauntlet */}
+          <div
+            onClick={() => {
+              sound.playClick();
+              onNavigateTab('password');
+            }}
+            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                  ACT.03
+                </span>
+                <KeyRound className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
+              </div>
+
+              <h4 className="text-sm font-black text-white font-mono uppercase mb-1.5 tracking-tight group-hover:text-white transition-colors">
+                Cipher Gauntlet
+              </h4>
+              <p className="text-[11px] text-zinc-400 leading-relaxed">
+                Forge a hardened cryptographic key through 15 progressive constraints and live 2FA tokens.
+              </p>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono">
+              <span className="text-[10px] text-zinc-500 uppercase font-semibold">15 Rules</span>
+              <span className="text-white font-bold group-hover:underline flex items-center gap-1 text-[11px]">
+                DEPLOY <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
+          </div>
+
+          {/* ACT 04: Cyber Threat Quiz */}
+          <div
+            onClick={() => {
+              sound.playClick();
+              onNavigateTab('quiz');
+            }}
+            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                  ACT.04
+                </span>
+                <FileQuestion className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
+              </div>
+
+              <h4 className="text-sm font-black text-white font-mono uppercase mb-1.5 tracking-tight group-hover:text-white transition-colors">
+                Threat Evaluation
+              </h4>
+              <p className="text-[11px] text-zinc-400 leading-relaxed">
+                Evaluate realistic attack vectors including juice jacking, spoofed subdomains, and SMS traps.
+              </p>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono">
+              <span className="text-[10px] text-zinc-500 uppercase font-semibold">5 Scenarios</span>
+              <span className="text-white font-bold group-hover:underline flex items-center gap-1 text-[11px]">
+                DEPLOY <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

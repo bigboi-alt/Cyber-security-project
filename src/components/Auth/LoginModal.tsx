@@ -104,49 +104,49 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="relative max-w-md w-full bg-[#121214] border border-zinc-800 rounded-2xl shadow-2xl p-6 sm:p-7 text-left">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative max-w-md w-full bg-[#0c0c0f] border-2 border-zinc-700 rounded-xl comic-shadow-lg p-6 sm:p-7 text-left space-y-4">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors cursor-pointer p-1"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white">
-            <Shield className="w-5 h-5" />
+        <div className="flex items-center gap-3 pb-3 border-b-2 border-zinc-800">
+          <div className="w-10 h-10 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+            <Shield className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white tracking-tight">
-              Student Sign In
+            <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
+              [ OPERATIVE ENROLLMENT // 入隊登録 ]
+            </div>
+            <h2 className="text-base font-black text-white tracking-tight font-mono uppercase">
+              Cadet Sign In
             </h2>
-            <p className="text-xs text-zinc-400">
-              The Khaitan School Cyber Security Portal
-            </p>
           </div>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-xl bg-zinc-900 border border-red-500/40 text-red-300 text-xs flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-              <div>{error}</div>
+            <div className="p-3 rounded-lg bg-rose-950/40 border-2 border-rose-500 text-zinc-200 text-xs flex items-start gap-2 comic-shadow-sm">
+              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+              <div className="font-mono text-[11px]">{error}</div>
             </div>
           )}
 
           {/* School Email */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-medium text-zinc-300 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-zinc-400" /> School Email ID
+              <label className="text-xs font-mono font-bold uppercase text-[#9d9e99] flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-zinc-400" /> SCHOOL EMAIL ID
               </label>
               <button
                 type="button"
                 onClick={handleAutoCompleteDomain}
-                className="text-[11px] text-zinc-400 hover:text-white transition-colors font-mono cursor-pointer"
+                className="text-[10px] text-zinc-400 hover:text-white transition-colors font-mono font-bold cursor-pointer"
               >
                 + @thekhaitanschool.org
               </button>
@@ -156,55 +156,55 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               placeholder="e.g. k-6764@thekhaitanschool.org"
               value={email}
               onChange={(e) => handleEmailChange(e.target.value)}
-              className="w-full bg-[#18181b] border border-zinc-800 focus:border-zinc-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 font-mono transition-colors"
+              className="w-full bg-[#141418] border-2 border-zinc-700 focus:border-white rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 font-mono transition-colors comic-shadow-sm font-semibold"
             />
           </div>
 
           {/* Student Name */}
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5 flex items-center gap-1.5">
-              <User className="w-3.5 h-3.5 text-zinc-400" /> Full Name
+            <label className="block text-xs font-mono font-bold uppercase text-[#9d9e99] mb-1.5 flex items-center gap-1.5">
+              <User className="w-3.5 h-3.5 text-zinc-400" /> FULL NAME
             </label>
             <input
               type="text"
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#18181b] border border-zinc-800 focus:border-zinc-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 transition-colors"
+              className="w-full bg-[#141418] border-2 border-zinc-700 focus:border-white rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 transition-colors comic-shadow-sm font-mono font-semibold"
             />
           </div>
 
           {/* Grade & Section */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1.5 flex items-center gap-1.5">
-                <GraduationCap className="w-3.5 h-3.5 text-zinc-400" /> Class
+              <label className="block text-xs font-mono font-bold uppercase text-[#9d9e99] mb-1.5 flex items-center gap-1.5">
+                <GraduationCap className="w-3.5 h-3.5 text-zinc-400" /> CLASS
               </label>
               <select
                 value={grade}
                 onChange={(e) => setGrade(e.target.value as ClassGrade)}
-                className="w-full bg-[#18181b] border border-zinc-800 focus:border-zinc-500 rounded-xl px-3 py-2.5 text-xs text-white cursor-pointer"
+                className="w-full bg-[#141418] border-2 border-zinc-700 focus:border-white rounded-lg px-3 py-2.5 text-xs text-white cursor-pointer font-mono font-bold comic-shadow-sm"
               >
                 {['6', '7', '8', '9', '10', '11', '12'].map((g) => (
-                  <option key={g} value={g} className="bg-zinc-900">
-                    Class {g}
+                  <option key={g} value={g} className="bg-zinc-900 font-mono">
+                    CLASS {g}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1.5">
-                Section
+              <label className="block text-xs font-mono font-bold uppercase text-[#9d9e99] mb-1.5">
+                SECTION
               </label>
               <select
                 value={section}
                 onChange={(e) => setSection(e.target.value as ClassSection)}
-                className="w-full bg-[#18181b] border border-zinc-800 focus:border-zinc-500 rounded-xl px-3 py-2.5 text-xs text-white cursor-pointer"
+                className="w-full bg-[#141418] border-2 border-zinc-700 focus:border-white rounded-lg px-3 py-2.5 text-xs text-white cursor-pointer font-mono font-bold comic-shadow-sm"
               >
                 {['A', 'B', 'C', 'D', 'E', 'F'].map((s) => (
-                  <option key={s} value={s} className="bg-zinc-900">
-                    Section {s}
+                  <option key={s} value={s} className="bg-zinc-900 font-mono">
+                    SECTION {s}
                   </option>
                 ))}
               </select>
@@ -213,10 +213,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
           <button
             type="submit"
-            className="w-full mt-2 py-2.5 px-4 rounded-xl font-medium bg-white hover:bg-zinc-200 text-black text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+            className="w-full mt-3 py-3 px-4 rounded-lg font-black bg-white hover:bg-zinc-200 text-black text-xs transition-transform active:translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer comic-shadow font-mono uppercase tracking-wider"
           >
-            <span>Enter Portal</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>ENTER NEXUM TERMINAL</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </form>
       </div>

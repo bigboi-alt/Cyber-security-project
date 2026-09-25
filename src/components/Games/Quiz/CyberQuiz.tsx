@@ -181,53 +181,64 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#121214] p-4 rounded-xl border border-zinc-800">
+      <div className="flex items-center justify-between bg-[#0c0c0f] p-4 rounded-xl border-2 border-zinc-800 comic-shadow">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white">
-            <FileQuestion className="w-4 h-4" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+            <FileQuestion className="w-4 h-4 text-white" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">Cyber Security Quiz</h3>
-            <p className="text-xs text-zinc-400">Interactive Scenario Assessment</p>
+            <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
+              [ ACT.04 // 脅威分析 ]
+            </div>
+            <h3 className="text-sm font-black text-white font-mono uppercase tracking-wide">
+              Threat Scenario Evaluation
+            </h3>
           </div>
         </div>
 
         <div className="text-right font-mono">
-          <div className="text-[11px] text-zinc-400">Score</div>
-          <div className="text-sm font-bold text-white">{score} pts</div>
+          <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Earned XP</div>
+          <div className="text-base font-black text-white">{score} pts</div>
         </div>
       </div>
 
       {!isCompleted ? (
-        <div className="rounded-xl bg-[#121214] border border-zinc-800 p-5 sm:p-6 space-y-5">
+        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 sm:p-6 space-y-5 comic-shadow">
           {/* Progress */}
-          <div className="flex items-center justify-between text-xs text-zinc-400">
-            <span>Question {currentIndex + 1} of {QUIZ_QUESTIONS.length}</span>
-            <span className="font-mono text-zinc-300">+{currentQ.points} points</span>
+          <div className="flex items-center justify-between text-xs font-mono border-b border-zinc-800 pb-3">
+            <span className="text-[#9d9e99] font-bold uppercase tracking-wider">
+              SCENARIO 0{currentIndex + 1} // 0{QUIZ_QUESTIONS.length}
+            </span>
+            <span className="font-mono text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 text-[11px] font-bold">
+              +{currentQ.points} PTS
+            </span>
           </div>
 
           {/* Scenario */}
-          <div>
-            <h4 className="text-base font-semibold text-white mb-1.5">
+          <div className="space-y-1.5">
+            <h4 className="text-base font-black text-white tracking-tight font-mono uppercase">
               {currentQ.title}
             </h4>
-            <p className="text-xs text-zinc-300 leading-relaxed">
+            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
               {currentQ.scenario}
             </p>
           </div>
 
-          {/* Visual Scenario Card */}
+          {/* Visual Scenario Card (Comic Callout / Dossier) */}
           {currentQ.visualContent && (
-            <div className="rounded-lg bg-[#18181b] border border-zinc-800 p-3.5 text-xs font-mono">
+            <div className="rounded-lg bg-[#141418] border-2 border-zinc-800 p-4 text-xs font-mono comic-shadow-sm">
               {currentQ.visualType === 'email' && (
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>Incoming Email Notice</span>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-zinc-300 font-sans border-b border-zinc-800 pb-2">
+                    <div className="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wider text-[#9d9e99]">
+                      <Mail className="w-3.5 h-3.5 text-white" />
+                      <span>Intercepted Email Notice</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-zinc-500 uppercase">Incoming Telemetry</span>
                   </div>
                   <div className="text-zinc-400"><strong>From:</strong> {currentQ.visualContent.sender}</div>
                   <div className="text-zinc-400"><strong>Subject:</strong> {currentQ.visualContent.subject}</div>
-                  <div className="pt-2 text-zinc-200 whitespace-pre-line border-t border-zinc-800/80">
+                  <div className="pt-2 text-zinc-200 whitespace-pre-line border-t border-zinc-800/80 leading-relaxed">
                     {currentQ.visualContent.body}
                   </div>
                 </div>
@@ -235,35 +246,38 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
 
               {currentQ.visualType === 'sms' && (
                 <div className="space-y-2">
-                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
-                    <Smartphone className="w-3.5 h-3.5" />
-                    <span>Direct Message from {currentQ.visualContent.sender}</span>
+                  <div className="flex items-center justify-between text-zinc-300 font-sans border-b border-zinc-800 pb-2">
+                    <div className="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wider text-[#9d9e99]">
+                      <Smartphone className="w-3.5 h-3.5 text-white" />
+                      <span>Direct Cellular Message</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-zinc-500 uppercase">{currentQ.visualContent.sender}</span>
                   </div>
-                  <div className="text-zinc-200">
+                  <div className="text-zinc-200 leading-relaxed">
                     {currentQ.visualContent.body}
                   </div>
                 </div>
               )}
 
               {currentQ.visualType === 'url' && (
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
-                    <Globe className="w-3.5 h-3.5" />
-                    <span>Network Inspector</span>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5 text-[#9d9e99] font-sans border-b border-zinc-800 pb-2 text-xs font-bold uppercase tracking-wider">
+                    <Globe className="w-3.5 h-3.5 text-white" />
+                    <span>Target URL Inspection</span>
                   </div>
-                  <div className="text-zinc-200 break-all select-all">
+                  <div className="text-zinc-200 break-all select-all font-mono bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs">
                     {currentQ.visualContent.url}
                   </div>
                 </div>
               )}
 
               {currentQ.visualType === 'code' && (
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-zinc-300 font-sans border-b border-zinc-800 pb-1.5">
-                    <HardDrive className="w-3.5 h-3.5" />
-                    <span>Storage Inspection</span>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5 text-[#9d9e99] font-sans border-b border-zinc-800 pb-2 text-xs font-bold uppercase tracking-wider">
+                    <HardDrive className="w-3.5 h-3.5 text-white" />
+                    <span>Storage Registry Dump</span>
                   </div>
-                  <div className="text-zinc-200 whitespace-pre-line">
+                  <div className="text-zinc-200 whitespace-pre-line bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs leading-relaxed">
                     {currentQ.visualContent.body}
                   </div>
                 </div>
@@ -272,22 +286,22 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
           )}
 
           {/* Options */}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {currentQ.options.map((option) => {
               const isSelected = selectedOptionId === option.id;
               const isCorrectOption = verifySaltedHash(currentQ.id, option.id, currentQ.hashDigest);
-              let style = 'bg-[#18181b] border-zinc-800 text-zinc-300 hover:border-zinc-700';
+              let style = 'bg-[#121216] border-2 border-zinc-800 text-zinc-300 hover:border-zinc-500 hover:text-white';
 
               if (isAnswerSubmitted) {
                 if (isCorrectOption) {
-                  style = 'bg-zinc-800/80 border-green-500/80 text-white font-medium';
+                  style = 'bg-emerald-950/40 border-2 border-emerald-500 text-white font-bold comic-shadow-sm';
                 } else if (isSelected && !isCorrectOption) {
-                  style = 'bg-zinc-800/80 border-red-500/80 text-zinc-300';
+                  style = 'bg-rose-950/40 border-2 border-rose-500 text-zinc-200 comic-shadow-sm';
                 } else {
-                  style = 'bg-[#18181b] border-zinc-800 text-zinc-600';
+                  style = 'bg-[#0f0f13] border-2 border-zinc-900 text-zinc-600';
                 }
               } else if (isSelected) {
-                style = 'bg-zinc-800 border-zinc-500 text-white';
+                style = 'bg-zinc-800 border-2 border-white text-white font-semibold comic-shadow-sm';
               }
 
               return (
@@ -295,17 +309,17 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
                   key={option.id}
                   disabled={isAnswerSubmitted}
                   onClick={() => handleSelectOption(option.id)}
-                  className={`w-full p-3 rounded-lg border text-left text-xs flex items-start gap-2.5 transition-colors cursor-pointer ${style}`}
+                  className={`w-full p-3.5 rounded-lg text-left text-xs flex items-start gap-3 transition-all cursor-pointer ${style}`}
                 >
-                  <span className="font-mono uppercase font-bold w-4 mt-0.5 text-zinc-400">
-                    {option.id}.
+                  <span className="font-mono uppercase font-black w-5 mt-0.5 text-zinc-400">
+                    [{option.id}]
                   </span>
                   <span className="flex-1 leading-relaxed">{option.text}</span>
                   {isAnswerSubmitted && isCorrectOption && (
-                    <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   )}
                   {isAnswerSubmitted && isSelected && !isCorrectOption && (
-                    <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                    <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                   )}
                 </button>
               );
@@ -317,45 +331,51 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
             <button
               disabled={!selectedOptionId}
               onClick={handleSubmitAnswer}
-              className={`w-full py-2.5 px-4 rounded-lg font-medium text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+              className={`w-full py-3 px-4 rounded-lg font-black text-xs flex items-center justify-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase tracking-wider font-mono ${
                 selectedOptionId
                   ? 'bg-white hover:bg-zinc-200 text-black'
-                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                  : 'bg-zinc-800 text-zinc-600 cursor-not-allowed opacity-60'
               }`}
             >
-              <span>Submit Answer</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>CONFIRM OPERATIVE VERDICT</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
             <div className="space-y-3">
-              <div className="p-3.5 rounded-lg bg-[#18181b] border border-zinc-800 text-xs text-zinc-300 leading-relaxed">
-                <div className="font-semibold text-white mb-1">Explanation:</div>
+              <div className="p-4 rounded-lg bg-[#141418] border-2 border-zinc-800 text-xs text-zinc-200 leading-relaxed comic-shadow-sm">
+                <div className="font-black text-white font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 text-[11px]">
+                  <span>// DEBRIEFING ANALYSIS</span>
+                </div>
                 {currentQ.explanation}
               </div>
 
               <button
                 onClick={handleNextQuestion}
-                className="w-full py-2.5 px-4 rounded-lg font-medium text-xs bg-white hover:bg-zinc-200 text-black transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-3 px-4 rounded-lg font-black text-xs bg-white hover:bg-zinc-200 text-black transition-transform active:translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer comic-shadow uppercase tracking-wider font-mono"
               >
-                <span>{currentIndex < QUIZ_QUESTIONS.length - 1 ? 'Next Question' : 'Finish Quiz'}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>{currentIndex < QUIZ_QUESTIONS.length - 1 ? 'NEXT SCENARIO →' : 'CONCLUDE ASSESSMENT →'}</span>
               </button>
             </div>
           )}
         </div>
       ) : (
         /* Completed */
-        <div className="rounded-xl bg-[#121214] border border-zinc-800 p-8 text-center space-y-4">
-          <h3 className="text-xl font-bold text-white">Quiz Completed</h3>
+        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-8 text-center space-y-4 comic-shadow">
+          <div className="w-12 h-12 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white mx-auto comic-shadow-sm">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+          </div>
+          <h3 className="text-xl font-black text-white font-mono uppercase tracking-wide">
+            EVALUATION CONCLUDED // 作戦完了
+          </h3>
           <p className="text-xs text-zinc-400">
-            You scored <strong className="text-white font-mono">{score} points</strong>. Points have been added to your account and your class squad.
+            You achieved an operative score of <strong className="text-white font-mono">{score} points</strong>. All telemetry has been recorded to your class dossier.
           </p>
           <button
             onClick={handleRestart}
-            className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs inline-flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase font-mono tracking-wider"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Retake Quiz</span>
+            <RotateCcw className="w-4 h-4" />
+            <span>RE-EVALUATE SCENARIOS</span>
           </button>
         </div>
       )}

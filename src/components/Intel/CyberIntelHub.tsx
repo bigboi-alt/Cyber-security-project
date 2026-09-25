@@ -116,38 +116,45 @@ export const CyberIntelHub: React.FC<CyberIntelHubProps> = ({
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 animate-in fade-in duration-200">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#121214] border border-zinc-800 rounded-xl p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0c0c0f] border-2 border-zinc-800 rounded-xl p-5 comic-shadow">
         <div>
-          <h2 className="text-lg font-bold text-white">Cyber Guide</h2>
-          <p className="text-xs text-zinc-400">
-            Categorized quick-reference safety guides for students.
+          <div className="text-[10px] font-mono uppercase tracking-widest text-[#9d9e99] font-bold">
+            [ OPERATIVE INTEL ARCHIVE // 安全指針 ]
+          </div>
+          <h2 className="text-xl font-black text-white font-mono uppercase tracking-tight mt-0.5">
+            Cyber Defense Field Manual
+          </h2>
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Operational safety directives and threat mitigation protocols for students.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-zinc-400">
-          <span>National Helpline: <strong className="text-white font-mono">1930</strong></span>
+        <div className="flex items-center gap-3 text-xs font-mono">
+          <span className="bg-zinc-900 border border-zinc-700 px-3 py-1.5 rounded-lg text-zinc-300 font-bold">
+            HELPLINE: <strong className="text-white">1930</strong>
+          </span>
           <a
             href="https://cybercrime.gov.in"
             target="_blank"
             rel="noreferrer"
-            className="text-white hover:underline flex items-center gap-1 font-medium"
+            className="text-white bg-[#141418] hover:bg-zinc-800 border-2 border-zinc-700 px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-bold transition-colors comic-shadow-sm"
           >
             <span>cybercrime.gov.in</span>
-            <ExternalLink className="w-3 h-3" />
+            <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
           </a>
         </div>
       </div>
 
-      {/* Google Classroom Layout: Sidebar Topics + Stream */}
+      {/* Topics Sidebar + Stream (Comic Dossier Style) */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        {/* Left Column: Topics Sidebar (Google Classroom style) */}
-        <div className="space-y-2">
-          <div className="text-xs font-semibold text-zinc-400 uppercase tracking-wider px-2">
-            Topics
+        {/* Left Column: Topics Sidebar */}
+        <div className="space-y-2.5">
+          <div className="text-[10px] font-black text-white uppercase font-mono tracking-widest px-1">
+            // INTEL DIRECTORIES
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {TOPICS.map((topic) => {
               const isSelected = selectedTopic === topic;
               return (
@@ -157,14 +164,14 @@ export const CyberIntelHub: React.FC<CyberIntelHubProps> = ({
                     sound.playClick();
                     setSelectedTopic(topic);
                   }}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center justify-between ${
+                  className={`w-full text-left px-3.5 py-2.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer flex items-center justify-between border-2 ${
                     isSelected
-                      ? 'bg-zinc-800 text-white font-semibold'
-                      : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                      ? 'bg-white text-black border-white comic-shadow-sm'
+                      : 'bg-[#0c0c0f] border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700'
                   }`}
                 >
-                  <span>{topic}</span>
-                  {isSelected && <ChevronRight className="w-3 h-3 text-zinc-400" />}
+                  <span className="uppercase">{topic}</span>
+                  {isSelected && <ChevronRight className="w-4 h-4 text-black" />}
                 </button>
               );
             })}
@@ -172,36 +179,36 @@ export const CyberIntelHub: React.FC<CyberIntelHubProps> = ({
         </div>
 
         {/* Right 3 Columns: Materials Stream */}
-        <div className="md:col-span-3 space-y-3.5">
-          <div className="text-xs font-semibold text-zinc-400 uppercase tracking-wider px-1">
-            {selectedTopic} ({filteredItems.length} guides)
+        <div className="md:col-span-3 space-y-4">
+          <div className="text-[10px] font-black text-white uppercase font-mono tracking-widest px-1">
+            // {selectedTopic.toUpperCase()} DIRECTIVE FILES ({filteredItems.length})
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {filteredItems.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.id}
-                  className="rounded-xl bg-[#121214] border border-zinc-800 p-4 transition-colors hover:border-zinc-700 space-y-2"
+                  className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-4 transition-all hover:border-zinc-600 space-y-2 comic-shadow"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white shrink-0 mt-0.5">
-                      <Icon className="w-4 h-4" />
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white shrink-0 mt-0.5 comic-shadow-sm">
+                      <Icon className="w-4 h-4 text-white" />
                     </div>
 
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h4 className="text-xs font-semibold text-white">{item.title}</h4>
-                        <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-400">
+                        <h4 className="text-xs font-black text-white font-mono uppercase tracking-wide">{item.title}</h4>
+                        <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-zinc-900 text-zinc-400 border border-zinc-800 uppercase font-semibold">
                           {item.topic}
                         </span>
                       </div>
                       <p className="text-xs text-zinc-300 mt-1 leading-relaxed">
                         {item.shortSummary}
                       </p>
-                      <div className="mt-2 text-[11px] text-zinc-400 border-l-2 border-zinc-700 pl-2 py-0.5">
-                        <strong className="text-zinc-200">Rule:</strong> {item.keyRule}
+                      <div className="mt-2.5 text-[11px] text-zinc-300 bg-[#141418] border-l-4 border-l-white border-y border-r border-zinc-800/80 p-2.5 rounded-r font-mono">
+                        <strong className="text-white uppercase">// MANDATE:</strong> {item.keyRule}
                       </div>
                     </div>
                   </div>
@@ -210,39 +217,41 @@ export const CyberIntelHub: React.FC<CyberIntelHubProps> = ({
             })}
           </div>
 
-          {/* Student Hygiene Assignment Card (Classroom style) */}
-          <div className="rounded-xl bg-[#121214] border border-zinc-800 p-4 mt-6">
-            <div className="flex items-center justify-between mb-3">
+          {/* Student Hygiene Assignment Card (Manga Certification Checklist) */}
+          <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 mt-6 comic-shadow space-y-3">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
               <div className="flex items-center gap-2">
                 <Bookmark className="w-4 h-4 text-white" />
-                <h4 className="text-xs font-semibold text-white">Student Safety Checklist</h4>
+                <h4 className="text-xs font-black text-white font-mono uppercase tracking-widest">
+                  OPERATIVE COMPLIANCE CHECKLIST // 点検
+                </h4>
               </div>
-              <span className="text-[11px] font-mono text-zinc-400">
-                {checkedItems.length} of {CHECKLIST.length} completed
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-700/60 font-bold uppercase">
+                {checkedItems.length} OF {CHECKLIST.length} ATTESTED
               </span>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 pt-1">
               {CHECKLIST.map((item, idx) => {
                 const isChecked = checkedItems.includes(idx);
                 return (
                   <div
                     key={idx}
                     onClick={() => toggleCheck(idx)}
-                    className={`p-2.5 rounded-lg border text-xs flex items-center gap-2.5 cursor-pointer transition-colors ${
+                    className={`p-3 rounded-lg border-2 text-xs flex items-center gap-3 cursor-pointer transition-all ${
                       isChecked
-                        ? 'bg-zinc-800/60 border-zinc-600 text-white'
-                        : 'bg-[#18181b] border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                        ? 'bg-emerald-950/30 border-emerald-500/70 text-white comic-shadow-sm font-semibold'
+                        : 'bg-[#141418] border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700'
                     }`}
                   >
                     <div className="shrink-0">
                       {isChecked ? (
-                        <CheckSquare className="w-4 h-4 text-white" />
+                        <CheckSquare className="w-4 h-4 text-emerald-400" />
                       ) : (
                         <Square className="w-4 h-4 text-zinc-600" />
                       )}
                     </div>
-                    <span>{item}</span>
+                    <span className="font-mono text-[11px]">{item}</span>
                   </div>
                 );
               })}

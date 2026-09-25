@@ -165,62 +165,80 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#121214] p-4 rounded-xl border border-zinc-800">
+      <div className="flex items-center justify-between bg-[#0c0c0f] p-4 rounded-xl border-2 border-zinc-800 comic-shadow">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white">
-            <ShieldAlert className="w-4 h-4" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+            <ShieldAlert className="w-4 h-4 text-rose-400" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">PhishGuard Triage</h3>
-            <p className="text-xs text-zinc-400">Review and classify incoming school notices and alerts</p>
+            <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
+              [ ACT.02 // 緊急対応 ]
+            </div>
+            <h3 className="text-sm font-black text-white font-mono uppercase tracking-wide">
+              PhishGuard SOC Triage
+            </h3>
           </div>
         </div>
 
         <div className="text-right font-mono">
-          <div className="text-[11px] text-zinc-400">Score</div>
-          <div className="text-sm font-bold text-white">{score} pts</div>
+          <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Triage Score</div>
+          <div className="text-base font-black text-white">{score} pts</div>
         </div>
       </div>
 
       {!isGameOver && currentIncident ? (
-        <div className="rounded-xl bg-[#121214] border border-zinc-800 p-5 space-y-4">
+        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 space-y-4 comic-shadow">
           {/* Metadata */}
-          <div className="flex items-center justify-between text-xs text-zinc-400">
-            <span>Notice {currentIdx + 1} of {INCIDENTS.length}</span>
-            <span className="font-mono text-zinc-300 flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-zinc-400" /> {timer}s
+          <div className="flex items-center justify-between text-xs font-mono border-b border-zinc-800 pb-3">
+            <span className="text-[#9d9e99] font-bold uppercase tracking-wider">
+              INTERCEPTED NOTICE 0{currentIdx + 1} // 0{INCIDENTS.length}
+            </span>
+            <span className="font-mono text-white bg-zinc-900 px-2.5 py-0.5 rounded border border-zinc-700 flex items-center gap-1.5 text-xs font-bold">
+              <Clock className="w-3.5 h-3.5 text-white animate-pulse" />
+              <span>{timer}S REMAINING</span>
             </span>
           </div>
 
-          {/* Email Container */}
-          <div className="rounded-lg bg-[#18181b] border border-zinc-800 p-4 space-y-3 text-xs">
-            <div className="border-b border-zinc-800 pb-2.5">
-              <div className="text-zinc-400 font-medium">From:</div>
-              <div className="font-semibold text-white mt-0.5 flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-zinc-400" />
-                <span>{currentIncident.senderName}</span>
-                <span className="font-mono text-zinc-400 font-normal">&lt;{currentIncident.senderAddress}&gt;</span>
+          {/* Email Container (Manga Inked Transmission Box) */}
+          <div className="rounded-lg bg-[#141418] border-2 border-zinc-800 p-4 space-y-3 text-xs comic-shadow-sm">
+            <div className="border-b border-zinc-800 pb-2.5 flex items-center justify-between">
+              <div>
+                <div className="text-[10px] font-mono text-zinc-500 uppercase font-semibold">Sender Telemetry:</div>
+                <div className="font-bold text-white mt-0.5 flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-zinc-400" />
+                  <span>{currentIncident.senderName}</span>
+                  <span className="font-mono text-zinc-400 font-normal">&lt;{currentIncident.senderAddress}&gt;</span>
+                </div>
               </div>
+              <span className={`text-[10px] font-mono font-black px-2 py-0.5 rounded border uppercase ${
+                currentIncident.urgency === 'Critical' 
+                  ? 'bg-rose-950/80 text-rose-300 border-rose-600/80' 
+                  : 'bg-zinc-900 text-zinc-400 border-zinc-700'
+              }`}>
+                {currentIncident.urgency} Urgency
+              </span>
             </div>
 
             <div>
-              <div className="text-zinc-400 font-medium">Subject:</div>
-              <div className="text-zinc-200 mt-0.5 font-medium">{currentIncident.subject}</div>
+              <div className="text-[10px] font-mono text-zinc-500 uppercase font-semibold">Subject Header:</div>
+              <div className="text-zinc-200 mt-0.5 font-bold font-mono">{currentIncident.subject}</div>
             </div>
 
-            <div className="p-3 bg-zinc-900 rounded border border-zinc-800/80 font-mono text-zinc-200 whitespace-pre-line leading-relaxed">
+            <div className="p-3 bg-zinc-950 rounded border border-zinc-800 font-mono text-zinc-200 whitespace-pre-line leading-relaxed text-xs">
               {currentIncident.body}
             </div>
 
             <div>
-              <div className="text-[11px] text-zinc-400 mb-1.5 font-medium">Indicators:</div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-[#9d9e99] mb-1.5 font-bold">
+                // FORENSIC INDICATORS:
+              </div>
               <div className="flex flex-wrap gap-1.5">
                 {currentIncident.indicators.map((ind, i) => (
                   <span
                     key={i}
-                    className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 border border-zinc-800 flex items-center gap-1"
+                    className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 border border-zinc-700 flex items-center gap-1 font-mono font-medium"
                   >
-                    <AlertTriangle className="w-3 h-3 text-zinc-400" />
+                    <AlertTriangle className="w-3 h-3 text-[#9d9e99]" />
                     <span>{ind}</span>
                   </span>
                 ))}
@@ -230,71 +248,76 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
 
           {/* Action Buttons */}
           {!feedback ? (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
               <button
                 onClick={() => handleAction('ALLOW')}
-                className="p-2.5 rounded-lg border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="p-3 rounded-lg border-2 border-emerald-600/70 bg-[#121216] hover:bg-emerald-950/40 text-emerald-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
               >
-                <Check className="w-3.5 h-3.5 text-green-400" />
-                <span>Allow (Legitimate)</span>
+                <Check className="w-4 h-4 text-emerald-400" />
+                <span>ALLOW NOTICE</span>
               </button>
 
               <button
                 onClick={() => handleAction('QUARANTINE')}
-                className="p-2.5 rounded-lg border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="p-3 rounded-lg border-2 border-amber-500/70 bg-[#121216] hover:bg-amber-950/40 text-amber-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
               >
-                <Archive className="w-3.5 h-3.5 text-yellow-400" />
-                <span>Quarantine</span>
+                <Archive className="w-4 h-4 text-amber-400" />
+                <span>QUARANTINE</span>
               </button>
 
               <button
                 onClick={() => handleAction('REPORT_CERTIN')}
-                className="p-2.5 rounded-lg border border-zinc-700 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="p-3 rounded-lg border-2 border-rose-600/70 bg-[#121216] hover:bg-rose-950/40 text-rose-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
               >
-                <Flag className="w-3.5 h-3.5 text-red-400" />
-                <span>Report to 1930</span>
+                <Flag className="w-4 h-4 text-rose-400" />
+                <span>REPORT TO 1930</span>
               </button>
             </div>
           ) : (
             <div className="space-y-3">
-              <div className={`p-3 rounded-lg border text-xs leading-relaxed ${
+              <div className={`p-4 rounded-lg border-2 text-xs leading-relaxed comic-shadow-sm font-sans ${
                 feedback.isCorrect
-                  ? 'bg-zinc-800/80 border-green-500/60 text-zinc-200'
-                  : 'bg-zinc-800/80 border-red-500/60 text-zinc-200'
+                  ? 'bg-emerald-950/40 border-emerald-500 text-zinc-200'
+                  : 'bg-rose-950/40 border-rose-500 text-zinc-200'
               }`}>
-                <div className="font-semibold text-white mb-1 flex items-center gap-1.5">
+                <div className="font-black text-white font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 text-xs">
                   {feedback.isCorrect ? (
-                    <CheckCircle2 className="w-4 h-4 text-green-400" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   ) : (
-                    <XCircle className="w-4 h-4 text-red-400" />
+                    <XCircle className="w-4 h-4 text-rose-400" />
                   )}
-                  <span>{feedback.isCorrect ? 'Correct Decision' : 'Incorrect Decision'}</span>
+                  <span>{feedback.isCorrect ? 'DECISION VERIFIED // 合格' : 'INCORRECT ASSESSMENT // 判定不一致'}</span>
                 </div>
                 {feedback.text}
               </div>
 
               <button
                 onClick={handleNextIncident}
-                className="w-full py-2.5 px-4 rounded-lg font-medium text-xs bg-white hover:bg-zinc-200 text-black transition-colors cursor-pointer"
+                className="w-full py-3 px-4 rounded-lg font-black text-xs bg-white hover:bg-zinc-200 text-black transition-transform active:translate-y-0.5 cursor-pointer comic-shadow font-mono uppercase tracking-wider"
               >
-                <span>{currentIdx < INCIDENTS.length - 1 ? 'Next Notice' : 'Finish Triage'}</span>
+                <span>{currentIdx < INCIDENTS.length - 1 ? 'NEXT INTERCEPTED NOTICE →' : 'CONCLUDE SOC SESSION →'}</span>
               </button>
             </div>
           )}
         </div>
       ) : (
         /* Completed */
-        <div className="rounded-xl bg-[#121214] border border-zinc-800 p-8 text-center space-y-4">
-          <h4 className="text-xl font-bold text-white">Triage Session Finished</h4>
+        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-8 text-center space-y-4 comic-shadow">
+          <div className="w-12 h-12 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white mx-auto comic-shadow-sm">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+          </div>
+          <h4 className="text-xl font-black text-white font-mono uppercase tracking-wide">
+            SOC TRIAGE COMPLETED // 任務終了
+          </h4>
           <p className="text-xs text-zinc-400">
             You scored <strong className="text-white font-mono">{score} points</strong>. All points have been credited to your class.
           </p>
           <button
             onClick={handleRestart}
-            className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs inline-flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase font-mono tracking-wider"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Restart Triage</span>
+            <RotateCcw className="w-4 h-4" />
+            <span>RESTART TRIAGE SESSION</span>
           </button>
         </div>
       )}

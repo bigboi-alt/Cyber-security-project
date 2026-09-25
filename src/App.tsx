@@ -144,10 +144,10 @@ export function App() {
         </main>
 
         {/* Clean Scrolled-Down Footer: Far Left The Khaitan School, Middle Arya & Akshaj */}
-        <footer className="relative z-20 border-t border-zinc-800/80 bg-[#0c0c0e]/95 backdrop-blur-md py-4 px-4 sm:px-6">
+        <footer className="relative z-20 border-t-2 border-zinc-800 bg-[#08080a]/95 backdrop-blur-md py-4 px-4 sm:px-6">
           <div className="w-full max-w-[1850px] mx-auto grid grid-cols-1 sm:grid-cols-3 items-center gap-3 text-xs">
             {/* Far Left: The Khaitan School */}
-            <div className="text-zinc-400 font-medium tracking-wide text-center sm:text-left select-none">
+            <div className="text-zinc-300 font-black font-mono tracking-wider uppercase text-center sm:text-left select-none text-xs">
               The Khaitan School
             </div>
 
@@ -158,18 +158,18 @@ export function App() {
                   sound.playClick();
                   setIsCreditsOpen(true);
                 }}
-                className="text-xs text-[#9d9e99] hover:text-white transition-colors cursor-pointer group flex items-center justify-center gap-1.5 font-medium select-none"
+                className="text-xs text-[#9d9e99] hover:text-white transition-colors cursor-pointer group flex items-center justify-center gap-1.5 font-bold uppercase font-mono select-none"
               >
-                <span>Built by</span>
-                <span className="text-zinc-100 font-semibold underline underline-offset-4 decoration-zinc-600 group-hover:decoration-white transition-colors">
-                  Arya and Akshaj
+                <span>BUILT BY</span>
+                <span className="text-white font-black underline underline-offset-4 decoration-zinc-500 group-hover:decoration-white transition-colors">
+                  ARYA AND AKSHAJ
                 </span>
               </button>
             </div>
 
             {/* Far Right: Cyber Security Initiative */}
-            <div className="text-zinc-500 font-mono text-[11px] text-center sm:text-right hidden sm:block select-none">
-              Cyber Security Initiative
+            <div className="text-[#9d9e99] font-mono text-[11px] font-bold uppercase tracking-widest text-center sm:text-right hidden sm:block select-none">
+              [ NEXUM PROTOCOL // 防衛計画 ]
             </div>
           </div>
         </footer>

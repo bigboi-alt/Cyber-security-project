@@ -8,7 +8,7 @@
   html, body {
     margin: 0;
     padding: 0;
-    background-color: #09090b;
+    background-color: #070709;
     color: #f4f4f5;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     overflow-x: hidden;
@@ -16,26 +16,124 @@
   }
 }
 
-/* Clean Matte Scrollbar */
+/* Comic / Manga Halftone Screentone Pattern */
+.manga-halftone {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.manga-screentone-dense {
+  background-image: radial-gradient(circle, rgba(157, 158, 153, 0.1) 1.2px, transparent 1.2px);
+  background-size: 8px 8px;
+}
+
+/* Comic Tactical Stripes (Warning & Progress Hatching) */
+.comic-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.02) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+.comic-stripes-accent {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 42, 85, 0.08),
+    rgba(255, 42, 85, 0.08) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+/* Comic Panel Hard Borders and Shadows (Manga Inking) */
+.comic-border {
+  border: 2px solid #27272a;
+}
+
+.comic-border-sharp {
+  border: 2px solid #3f3f46;
+}
+
+.comic-shadow-sm {
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.comic-shadow {
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.comic-shadow-lg {
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.comic-shadow-white {
+  box-shadow: 3px 3px 0px rgba(255, 255, 255, 0.2);
+}
+
+.comic-shadow-crimson {
+  box-shadow: 4px 4px 0px #e11d48;
+}
+
+/* Slanted Manga Action Tags */
+.comic-skew {
+  transform: skewX(-6deg);
+}
+
+.comic-unskew {
+  transform: skewX(6deg);
+}
+
+/* Manga Panel Cut Corners */
+.comic-chamfer {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+
+/* Manga Speech Callout Notch */
+.comic-callout {
+  position: relative;
+}
+.comic-callout::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #18181b;
+}
+
+/* Clean Matte Manga Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #070709;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #27272a;
-  border-radius: 3px;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #52525b;
 }
 
-/* Subtle clean focus states */
+/* Clean focus states */
 input:focus, textarea:focus, select:focus {
   outline: none;
 }

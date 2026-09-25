@@ -222,42 +222,46 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#121214] p-4 rounded-xl border border-zinc-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0c0c0f] p-4 rounded-xl border-2 border-zinc-800 comic-shadow">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white">
-            <KeyRound className="w-4 h-4" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+            <KeyRound className="w-4 h-4 text-white" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">The Password Game</h3>
-            <p className="text-xs text-zinc-400">Cyber Security Password Challenge</p>
+            <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
+              [ ACT.03 // 暗号構築 ]
+            </div>
+            <h3 className="text-sm font-black text-white font-mono uppercase tracking-wide">
+              Cipher Gauntlet Challenge
+            </h3>
           </div>
         </div>
 
-        {/* 2FA token */}
-        <div className="flex items-center gap-2 bg-[#18181b] px-3 py-1.5 rounded-lg border border-zinc-800 font-mono text-xs">
-          <span className="text-zinc-400">2FA:</span>
-          <span className="text-white font-bold tracking-wider">{twoFactorToken}</span>
-          <span className="text-zinc-500 flex items-center gap-1 border-l border-zinc-800 pl-2">
-            <Clock className="w-3 h-3" /> {twoFactorTimer}s
+        {/* 2FA token with Comic Anime Ticker */}
+        <div className="flex items-center gap-2.5 bg-[#141418] px-3.5 py-1.5 rounded-lg border-2 border-zinc-800 font-mono text-xs comic-shadow-sm">
+          <span className="text-zinc-500 font-bold uppercase text-[10px]">2FA TOKEN:</span>
+          <span className="text-white font-black tracking-widest text-sm">{twoFactorToken}</span>
+          <span className="text-zinc-400 flex items-center gap-1 border-l border-zinc-800 pl-2 text-[11px] font-bold">
+            <Clock className="w-3 h-3 text-[#9d9e99]" /> {twoFactorTimer}s
           </span>
         </div>
       </div>
 
       {/* Input */}
-      <div className="rounded-xl bg-[#121214] border border-zinc-800 p-5 space-y-3">
+      <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 space-y-3.5 comic-shadow">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-medium text-zinc-300 flex items-center gap-1.5">
+          <label className="text-xs font-black text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-zinc-400" />
-            <span>Enter Password</span>
+            <span>ENCRYPTED INPUT BUFFER</span>
           </label>
 
           <div className="flex items-center gap-3 text-xs font-mono text-zinc-400">
-            <span>Length: <strong className="text-white">{password.length}</strong></span>
-            <span>Digit Sum: <strong className={digitSum === 25 ? 'text-green-400' : 'text-zinc-200'}>{digitSum}</strong></span>
-            <span>Roman Sum: <strong className={romanSum === 35 ? 'text-green-400' : 'text-zinc-200'}>{romanSum}</strong></span>
+            <span>LEN: <strong className="text-white">{password.length}</strong></span>
+            <span>DIGIT: <strong className={digitSum === 25 ? 'text-emerald-400 font-black' : 'text-zinc-300'}>{digitSum}/25</strong></span>
+            <span>ROMAN: <strong className={romanSum === 35 ? 'text-emerald-400 font-black' : 'text-zinc-300'}>{romanSum}/35</strong></span>
             <button
               onClick={() => setShowPassword(!showPassword)}
-              className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="text-zinc-400 hover:text-white transition-colors cursor-pointer ml-1"
             >
               {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
             </button>
@@ -268,62 +272,70 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
           rows={2}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Start typing your password..."
-          className="w-full bg-[#18181b] border border-zinc-800 focus:border-zinc-500 rounded-lg p-3 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none transition-colors resize-none"
+          placeholder="Construct cryptographic string satisfying active constraints..."
+          className="w-full bg-[#141418] border-2 border-zinc-800 focus:border-white rounded-lg p-3 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none transition-colors resize-none comic-shadow-sm font-semibold"
         />
 
-        <div className="flex items-center justify-between text-xs text-zinc-400">
-          <span>{maxSatisfiedIndex} of {RULES.length} rules passed</span>
+        <div className="flex items-center justify-between text-xs font-mono">
+          <span className="text-[#9d9e99] font-bold uppercase tracking-wider">
+            {maxSatisfiedIndex} OF {RULES.length} CONSTRAINTS SATISFIED
+          </span>
           <button
             onClick={() => {
               sound.playClick();
               setPassword('');
             }}
-            className="hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+            className="hover:text-white text-zinc-400 flex items-center gap-1 cursor-pointer transition-colors font-bold uppercase text-[11px]"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Clear</span>
+            <span>CLEAR BUFFER</span>
           </button>
         </div>
       </div>
 
       {/* Rules list */}
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {visibleRules.slice().reverse().map((rule) => {
           const isValid = rule.validator(password);
           return (
             <div
               key={rule.id}
-              className={`rounded-lg p-3 border transition-colors ${
+              className={`rounded-lg p-3.5 border-2 transition-all ${
                 isValid
-                  ? 'bg-zinc-800/40 border-zinc-700 text-zinc-200'
-                  : 'bg-[#18181b] border-zinc-800 text-zinc-300'
+                  ? 'bg-emerald-950/30 border-emerald-500/70 text-zinc-200 comic-shadow-sm'
+                  : 'bg-[#0c0c0f] border-zinc-800 text-zinc-300 comic-shadow-sm'
               }`}
             >
               <div className="flex items-start justify-between gap-3 text-xs">
-                <div className="flex items-start gap-2.5">
+                <div className="flex items-start gap-3">
                   <div className="mt-0.5 shrink-0">
                     {isValid ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                     ) : (
-                      <XCircle className="w-4 h-4 text-red-400" />
+                      <XCircle className="w-4 h-4 text-rose-500" />
                     )}
                   </div>
                   <div>
-                    <div className="font-semibold text-white">{rule.title}</div>
-                    <div className="text-zinc-400 mt-0.5">{rule.description}</div>
+                    <div className="font-black text-white font-mono uppercase tracking-wide text-xs">
+                      {rule.title}
+                    </div>
+                    <div className="text-zinc-300 mt-0.5 font-sans leading-relaxed text-[11px]">
+                      {rule.description}
+                    </div>
                     {!isValid && (
-                      <div className="text-red-400 text-[11px] mt-1 font-mono">
-                        {rule.errorMessage}
+                      <div className="text-rose-400 text-[11px] mt-1 font-mono font-semibold">
+                        // {rule.errorMessage}
                       </div>
                     )}
                   </div>
                 </div>
 
-                <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-medium ${
-                  isValid ? 'bg-zinc-700 text-zinc-200' : 'bg-zinc-900 text-zinc-500'
+                <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-black uppercase shrink-0 border ${
+                  isValid 
+                    ? 'bg-emerald-900/60 text-emerald-300 border-emerald-600/70' 
+                    : 'bg-zinc-900 text-zinc-500 border-zinc-800'
                 }`}>
-                  {isValid ? 'PASSED' : 'PENDING'}
+                  {isValid ? 'CLEARED' : 'PENDING'}
                 </span>
               </div>
             </div>
@@ -332,10 +344,15 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
       </div>
 
       {isCompleted && (
-        <div className="rounded-xl bg-[#121214] border border-zinc-700 p-6 text-center space-y-2">
-          <h4 className="text-lg font-bold text-white">All 15 Rules Satisfied!</h4>
-          <p className="text-xs text-zinc-400">
-            You successfully completed the password challenge. +300 bonus points have been added to your class.
+        <div className="rounded-xl bg-[#0c0c0f] border-2 border-emerald-500 p-6 text-center space-y-2 comic-shadow">
+          <div className="w-10 h-10 rounded-lg bg-emerald-950 border border-emerald-500 flex items-center justify-center text-emerald-400 mx-auto">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+          <h4 className="text-lg font-black text-white font-mono uppercase tracking-wide">
+            ALL 15 CIPHER RULES SATISFIED! // 完全攻略
+          </h4>
+          <p className="text-xs text-zinc-300">
+            You forged an impenetrable cryptographic key. +300 bonus XP logged to your class.
           </p>
         </div>
       )}

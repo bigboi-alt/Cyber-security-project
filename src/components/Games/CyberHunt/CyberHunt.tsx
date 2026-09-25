@@ -369,17 +369,17 @@ export const CyberHunt: React.FC<CyberHuntProps> = ({ student: _, onPointsEarned
       
       {/* Top Banner (Only shown when not full screen) */}
       {!isFullscreen && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-zinc-900/60 border border-zinc-800 rounded-xl px-4 py-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0c0c0f] border-2 border-zinc-800 rounded-xl px-4 py-3 comic-shadow">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white shrink-0 comic-shadow-sm">
               <Globe className="w-4 h-4 text-white" />
             </div>
             <div>
-              <div className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                Full Interactive Simulation
+              <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
+                [ ACT.01 // 実戦演習 ]
               </div>
-              <h2 className="text-sm font-bold text-white tracking-tight">
-                Simulated Web Browser & Real-World Threat Defense
+              <h2 className="text-sm font-black text-white tracking-wide font-mono uppercase">
+                Simulated Web Sandbox & Real-World Threat Defense
               </h2>
             </div>
           </div>
@@ -387,29 +387,29 @@ export const CyberHunt: React.FC<CyberHuntProps> = ({ student: _, onPointsEarned
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowTodoSidebar(!showTodoSidebar)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold border-2 transition-all cursor-pointer ${
                 showTodoSidebar
-                  ? 'bg-zinc-800 border-zinc-600 text-white'
-                  : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+                  ? 'bg-white border-white text-black comic-shadow-sm'
+                  : 'bg-[#141418] border-zinc-800 text-zinc-400 hover:text-white'
               }`}
             >
               <ListTodo className="w-3.5 h-3.5" />
-              <span>To-Do List ({completedCount}/3)</span>
+              <span>MISSION LIST ({completedCount}/3)</span>
             </button>
 
             <button
               onClick={() => setIsFullscreen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-semibold text-xs transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-black font-mono text-xs transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase"
             >
               <Maximize2 className="w-3.5 h-3.5" />
-              <span>Full Screen</span>
+              <span>FULL SCREEN</span>
             </button>
           </div>
         </div>
       )}
 
       {/* Main Browser Window Container */}
-      <div className={`rounded-2xl border border-zinc-800 bg-[#0e0e10] shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col ${
+      <div className={`rounded-xl border-2 border-zinc-800 bg-[#0c0c0f] comic-shadow-lg overflow-hidden flex flex-col ${
         isFullscreen ? 'h-full' : 'h-[calc(100vh-140px)] min-h-[700px]'
       }`}>
         
