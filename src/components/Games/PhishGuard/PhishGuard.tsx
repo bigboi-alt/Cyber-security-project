@@ -165,14 +165,14 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#0c0c0f] p-4 rounded-xl border-2 border-zinc-800 comic-shadow">
+      <div className="flex items-center justify-between bg-[#0c0c0f] p-4 rounded-none border-2 border-zinc-800 comic-shadow blocky-card-dark">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+          <div className="w-9 h-9 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
             <ShieldAlert className="w-4 h-4 text-rose-400" />
           </div>
           <div>
             <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
-              [ ACT.02 // 緊急対応 ]
+              [ ACT.02 // INCIDENT RESPONSE ]
             </div>
             <h3 className="text-sm font-black text-white font-mono uppercase tracking-wide">
               PhishGuard SOC Triage
@@ -187,20 +187,20 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
       </div>
 
       {!isGameOver && currentIncident ? (
-        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 space-y-4 comic-shadow">
+        <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-5 space-y-4 comic-shadow blocky-card-dark">
           {/* Metadata */}
           <div className="flex items-center justify-between text-xs font-mono border-b border-zinc-800 pb-3">
             <span className="text-[#9d9e99] font-bold uppercase tracking-wider">
               INTERCEPTED NOTICE 0{currentIdx + 1} // 0{INCIDENTS.length}
             </span>
-            <span className="font-mono text-white bg-zinc-900 px-2.5 py-0.5 rounded border border-zinc-700 flex items-center gap-1.5 text-xs font-bold">
+            <span className="font-mono text-white bg-zinc-900 px-2.5 py-0.5 rounded-none border border-zinc-700 flex items-center gap-1.5 text-xs font-bold">
               <Clock className="w-3.5 h-3.5 text-white animate-pulse" />
               <span>{timer}S REMAINING</span>
             </span>
           </div>
 
           {/* Email Container (Manga Inked Transmission Box) */}
-          <div className="rounded-lg bg-[#141418] border-2 border-zinc-800 p-4 space-y-3 text-xs comic-shadow-sm">
+          <div className="rounded-none bg-[#141418] border-2 border-zinc-800 p-4 space-y-3 text-xs comic-shadow-sm">
             <div className="border-b border-zinc-800 pb-2.5 flex items-center justify-between">
               <div>
                 <div className="text-[10px] font-mono text-zinc-500 uppercase font-semibold">Sender Telemetry:</div>
@@ -210,7 +210,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
                   <span className="font-mono text-zinc-400 font-normal">&lt;{currentIncident.senderAddress}&gt;</span>
                 </div>
               </div>
-              <span className={`text-[10px] font-mono font-black px-2 py-0.5 rounded border uppercase ${
+              <span className={`text-[10px] font-mono font-black px-2 py-0.5 rounded-none border uppercase ${
                 currentIncident.urgency === 'Critical' 
                   ? 'bg-rose-950/80 text-rose-300 border-rose-600/80' 
                   : 'bg-zinc-900 text-zinc-400 border-zinc-700'
@@ -224,7 +224,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
               <div className="text-zinc-200 mt-0.5 font-bold font-mono">{currentIncident.subject}</div>
             </div>
 
-            <div className="p-3 bg-zinc-950 rounded border border-zinc-800 font-mono text-zinc-200 whitespace-pre-line leading-relaxed text-xs">
+            <div className="p-3 bg-zinc-950 rounded-none border border-zinc-800 font-mono text-zinc-200 whitespace-pre-line leading-relaxed text-xs">
               {currentIncident.body}
             </div>
 
@@ -236,7 +236,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
                 {currentIncident.indicators.map((ind, i) => (
                   <span
                     key={i}
-                    className="text-[11px] px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 border border-zinc-700 flex items-center gap-1 font-mono font-medium"
+                    className="text-[11px] px-2 py-0.5 rounded-none bg-zinc-900 text-zinc-300 border border-zinc-700 flex items-center gap-1 font-mono font-medium"
                   >
                     <AlertTriangle className="w-3 h-3 text-[#9d9e99]" />
                     <span>{ind}</span>
@@ -251,7 +251,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
               <button
                 onClick={() => handleAction('ALLOW')}
-                className="p-3 rounded-lg border-2 border-emerald-600/70 bg-[#121216] hover:bg-emerald-950/40 text-emerald-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
+                className="p-3 rounded-none border-2 border-emerald-600/70 bg-[#121216] hover:bg-emerald-950/40 text-emerald-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm blocky-btn"
               >
                 <Check className="w-4 h-4 text-emerald-400" />
                 <span>ALLOW NOTICE</span>
@@ -259,7 +259,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
 
               <button
                 onClick={() => handleAction('QUARANTINE')}
-                className="p-3 rounded-lg border-2 border-amber-500/70 bg-[#121216] hover:bg-amber-950/40 text-amber-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
+                className="p-3 rounded-none border-2 border-amber-500/70 bg-[#121216] hover:bg-amber-950/40 text-amber-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm blocky-btn"
               >
                 <Archive className="w-4 h-4 text-amber-400" />
                 <span>QUARANTINE</span>
@@ -267,7 +267,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
 
               <button
                 onClick={() => handleAction('REPORT_CERTIN')}
-                className="p-3 rounded-lg border-2 border-rose-600/70 bg-[#121216] hover:bg-rose-950/40 text-rose-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
+                className="p-3 rounded-none border-2 border-rose-600/70 bg-[#121216] hover:bg-rose-950/40 text-rose-300 text-xs font-black uppercase font-mono flex items-center justify-center gap-1.5 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm blocky-btn"
               >
                 <Flag className="w-4 h-4 text-rose-400" />
                 <span>REPORT TO 1930</span>
@@ -275,7 +275,7 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
             </div>
           ) : (
             <div className="space-y-3">
-              <div className={`p-4 rounded-lg border-2 text-xs leading-relaxed comic-shadow-sm font-sans ${
+              <div className={`p-4 rounded-none border-2 text-xs leading-relaxed comic-shadow-sm font-sans ${
                 feedback.isCorrect
                   ? 'bg-emerald-950/40 border-emerald-500 text-zinc-200'
                   : 'bg-rose-950/40 border-rose-500 text-zinc-200'
@@ -286,14 +286,14 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
                   ) : (
                     <XCircle className="w-4 h-4 text-rose-400" />
                   )}
-                  <span>{feedback.isCorrect ? 'DECISION VERIFIED // 合格' : 'INCORRECT ASSESSMENT // 判定不一致'}</span>
+                  <span>{feedback.isCorrect ? 'DECISION VERIFIED // PASS' : 'INCORRECT ASSESSMENT // FAILED'}</span>
                 </div>
                 {feedback.text}
               </div>
 
               <button
                 onClick={handleNextIncident}
-                className="w-full py-3 px-4 rounded-lg font-black text-xs bg-white hover:bg-zinc-200 text-black transition-transform active:translate-y-0.5 cursor-pointer comic-shadow font-mono uppercase tracking-wider"
+                className="w-full py-3 px-4 rounded-none font-black text-xs bg-white hover:bg-zinc-200 text-black transition-transform active:translate-y-0.5 cursor-pointer comic-shadow font-mono uppercase tracking-wider blocky-btn"
               >
                 <span>{currentIdx < INCIDENTS.length - 1 ? 'NEXT INTERCEPTED NOTICE →' : 'CONCLUDE SOC SESSION →'}</span>
               </button>
@@ -302,19 +302,19 @@ export const PhishGuard: React.FC<PhishGuardProps> = ({ onPointsEarned }) => {
         </div>
       ) : (
         /* Completed */
-        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-8 text-center space-y-4 comic-shadow">
-          <div className="w-12 h-12 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white mx-auto comic-shadow-sm">
+        <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-8 text-center space-y-4 comic-shadow blocky-card-dark">
+          <div className="w-12 h-12 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white mx-auto comic-shadow-sm">
             <CheckCircle2 className="w-6 h-6 text-emerald-400" />
           </div>
           <h4 className="text-xl font-black text-white font-mono uppercase tracking-wide">
-            SOC TRIAGE COMPLETED // 任務終了
+            SOC TRIAGE COMPLETED // MISSION COMPLETE
           </h4>
           <p className="text-xs text-zinc-400">
             You scored <strong className="text-white font-mono">{score} points</strong>. All points have been credited to your class.
           </p>
           <button
             onClick={handleRestart}
-            className="px-5 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs inline-flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase font-mono tracking-wider"
+            className="px-5 py-2.5 rounded-none bg-white hover:bg-zinc-200 text-black font-black text-xs inline-flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase font-mono tracking-wider blocky-btn"
           >
             <RotateCcw className="w-4 h-4" />
             <span>RESTART TRIAGE SESSION</span>

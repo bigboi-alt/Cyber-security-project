@@ -169,7 +169,7 @@ export function App() {
 
             {/* Far Right: Cyber Security Initiative */}
             <div className="text-[#9d9e99] font-mono text-[11px] font-bold uppercase tracking-widest text-center sm:text-right hidden sm:block select-none">
-              [ NEXUM PROTOCOL // 防衛計画 ]
+              [ NEXUM PROTOCOL // DEFENSE GRID ]
             </div>
           </div>
         </footer>

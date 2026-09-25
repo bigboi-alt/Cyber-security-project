@@ -27,11 +27,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   if (!student) {
     return (
       <div className="max-w-lg mx-auto text-center py-20 px-4">
-        <div className="w-14 h-14 rounded-lg bg-[#0e0e12] border-2 border-zinc-700 flex items-center justify-center text-white mx-auto mb-4 comic-shadow">
+        <div className="w-14 h-14 rounded-none bg-[#0e0e12] border-2 border-zinc-700 flex items-center justify-center text-white mx-auto mb-4 comic-shadow">
           <ShieldCheck className="w-7 h-7 text-[#9d9e99]" />
         </div>
         <div className="inline-block px-3 py-1 mb-3 text-[11px] font-mono uppercase tracking-widest text-[#9d9e99] border border-zinc-800 bg-zinc-900/80">
-          [ ACCESS REQUIRED // ログイン必要 ]
+          [ ACCESS REQUIRED // ENROLLMENT LOCK ]
         </div>
         <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white mb-2 font-mono uppercase">
           NEXUM CYBER DEFENSE
@@ -44,7 +44,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             sound.playClick();
             onOpenLogin();
           }}
-          className="px-6 py-3 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs transition-transform active:translate-y-0.5 cursor-pointer inline-flex items-center gap-2 comic-shadow"
+          className="px-6 py-3 rounded-none bg-white hover:bg-zinc-200 text-black font-black text-xs transition-transform active:translate-y-0.5 cursor-pointer inline-flex items-center gap-2 comic-shadow blocky-btn"
         >
           <span>AUTHENTICATE OPERATIVE</span>
           <ArrowRight className="w-4 h-4" />
@@ -105,7 +105,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     <div className="space-y-6 pb-12 animate-in fade-in duration-200">
       
       {/* 1. Manga Operative Dossier Header (Consolidated, Zero Duplicate Clutter) */}
-      <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-6 sm:p-7 comic-shadow relative overflow-hidden">
+      <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-6 sm:p-7 comic-shadow relative overflow-hidden blocky-card-dark">
         {/* Subtle Manga Accent Corner */}
         <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none overflow-hidden">
           <div className="absolute top-2 right-2 text-[10px] font-mono text-zinc-700 tracking-widest uppercase">
@@ -118,21 +118,21 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           {/* Operative Identity & Progress */}
           <div className="space-y-3.5 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-[#9d9e99] font-bold">
+              <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-none bg-zinc-900 border border-zinc-700 text-[#9d9e99] font-bold">
                 [ CLASS {student.grade}-{student.section} ]
               </span>
               <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
                 ID: {student.email}
               </span>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-600/60 flex items-center gap-1 font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                VERIFIED // 認証済み
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-none border border-emerald-600/60 flex items-center gap-1 font-bold">
+                <span className="w-1.5 h-1.5 rounded-none bg-emerald-400 animate-pulse" />
+                VERIFIED // ACTIVE STATUS
               </span>
             </div>
 
             <div>
               <div className="text-[11px] font-mono text-zinc-400 tracking-wider uppercase mb-0.5">
-                CADET OPERATIVE // 隊員名
+                CADET OPERATIVE // IDENTIFIER
               </div>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-mono uppercase">
                 {student.name}
@@ -153,11 +153,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
               {/* Segmented Comic Gauge Bar */}
               <div className="flex items-center gap-1.5 pt-0.5">
-                {tasks.map((t, idx) => (
+                {tasks.map((t) => (
                   <div
                     key={t.id}
                     title={`${t.title}: ${t.isCompleted ? 'Cleared' : 'Pending'}`}
-                    className={`h-3 flex-1 rounded-sm border transition-all ${
+                    className={`h-3 flex-1 rounded-none border transition-all ${
                       t.isCompleted
                         ? 'bg-white border-white comic-shadow-sm'
                         : 'bg-zinc-900/90 border-zinc-800'
@@ -171,7 +171,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           {/* High-Contrast Comic Stat Blocks */}
           <div className="flex items-center gap-3 shrink-0">
             {/* Score Block */}
-            <div className="p-4 rounded-xl bg-[#121216] border-2 border-zinc-800 text-center min-w-[130px] comic-shadow">
+            <div className="p-4 rounded-none bg-[#121216] border-2 border-zinc-800 text-center min-w-[130px] comic-shadow blocky-card-dark">
               <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99] font-bold">
                 Score Accumulation
               </div>
@@ -184,7 +184,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
 
             {/* Badges Block */}
-            <div className="p-4 rounded-xl bg-[#121216] border-2 border-zinc-800 text-center min-w-[120px] comic-shadow">
+            <div className="p-4 rounded-none bg-[#121216] border-2 border-zinc-800 text-center min-w-[120px] comic-shadow blocky-card-dark">
               <div className="text-[10px] uppercase font-mono tracking-wider text-[#9d9e99] font-bold">
                 Badges Unlocked
               </div>
@@ -201,12 +201,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       {/* 2. Manga Badges Showcase (Comic Action Stamps) */}
       {badges.length > 0 && (
-        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 sm:p-6 comic-shadow space-y-3">
+        <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-5 sm:p-6 comic-shadow space-y-3 blocky-card-dark">
           <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
             <div className="flex items-center gap-2">
               <Award className="w-4 h-4 text-white" />
               <h3 className="text-xs font-black text-white tracking-widest uppercase font-mono">
-                [ UNLOCKED CREDENTIALS // 獲得バッジ ]
+                [ UNLOCKED CREDENTIALS // SYSTEM BADGES ]
               </h3>
             </div>
             <span className="text-[10px] font-mono text-zinc-400">
@@ -218,7 +218,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             {badges.map((badge, i) => (
               <div 
                 key={i}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border-2 border-zinc-700 text-xs font-mono text-white comic-shadow-sm font-semibold hover:border-zinc-400 transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-none bg-zinc-900 border-2 border-zinc-700 text-xs font-mono text-white comic-shadow-sm font-semibold hover:border-zinc-400 transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#9d9e99]" />
                 <span>{badge}</span>
@@ -233,7 +233,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#9d9e99] font-bold">
-              [ TACTICAL MODULES // 作戦演習 ]
+              [ TACTICAL MODULES // TACTICAL MODULES ]
             </span>
           </div>
           <span className="text-[10px] font-mono text-zinc-500">
@@ -249,11 +249,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               sound.playClick();
               onNavigateTab('hunt');
             }}
-            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
+            className="p-5 rounded-none bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg blocky-card-dark"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded-none border border-zinc-700 tracking-wider">
                   ACT.01
                 </span>
                 <Globe className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
@@ -281,11 +281,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               sound.playClick();
               onNavigateTab('phishguard');
             }}
-            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
+            className="p-5 rounded-none bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg blocky-card-dark"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded-none border border-zinc-700 tracking-wider">
                   ACT.02
                 </span>
                 <ShieldAlert className="w-4 h-4 text-zinc-400 group-hover:text-rose-400 transition-colors" />
@@ -313,11 +313,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               sound.playClick();
               onNavigateTab('password');
             }}
-            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
+            className="p-5 rounded-none bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg blocky-card-dark"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded-none border border-zinc-700 tracking-wider">
                   ACT.03
                 </span>
                 <KeyRound className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
@@ -345,11 +345,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               sound.playClick();
               onNavigateTab('quiz');
             }}
-            className="p-5 rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg"
+            className="p-5 rounded-none bg-[#0c0c0f] border-2 border-zinc-800 hover:border-white transition-all cursor-pointer group flex flex-col justify-between comic-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:comic-shadow-lg blocky-card-dark"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 tracking-wider">
+                <span className="text-[10px] font-mono font-black text-white bg-zinc-900 px-2 py-0.5 rounded-none border border-zinc-700 tracking-wider">
                   ACT.04
                 </span>
                 <FileQuestion className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />

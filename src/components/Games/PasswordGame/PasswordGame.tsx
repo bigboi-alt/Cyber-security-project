@@ -222,14 +222,14 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0c0c0f] p-4 rounded-xl border-2 border-zinc-800 comic-shadow">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0c0c0f] p-4 rounded-none border-2 border-zinc-800 comic-shadow blocky-card-dark">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+          <div className="w-9 h-9 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
             <KeyRound className="w-4 h-4 text-white" />
           </div>
           <div>
             <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
-              [ ACT.03 // 暗号構築 ]
+              [ ACT.03 // CIPHER PROTOCOL ]
             </div>
             <h3 className="text-sm font-black text-white font-mono uppercase tracking-wide">
               Cipher Gauntlet Challenge
@@ -238,7 +238,7 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
         </div>
 
         {/* 2FA token with Comic Anime Ticker */}
-        <div className="flex items-center gap-2.5 bg-[#141418] px-3.5 py-1.5 rounded-lg border-2 border-zinc-800 font-mono text-xs comic-shadow-sm">
+        <div className="flex items-center gap-2.5 bg-[#141418] px-3.5 py-1.5 rounded-none border-2 border-zinc-800 font-mono text-xs comic-shadow-sm">
           <span className="text-zinc-500 font-bold uppercase text-[10px]">2FA TOKEN:</span>
           <span className="text-white font-black tracking-widest text-sm">{twoFactorToken}</span>
           <span className="text-zinc-400 flex items-center gap-1 border-l border-zinc-800 pl-2 text-[11px] font-bold">
@@ -248,7 +248,7 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
       </div>
 
       {/* Input */}
-      <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 space-y-3.5 comic-shadow">
+      <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-5 space-y-3.5 comic-shadow blocky-card-dark">
         <div className="flex items-center justify-between">
           <label className="text-xs font-black text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-zinc-400" />
@@ -273,7 +273,7 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Construct cryptographic string satisfying active constraints..."
-          className="w-full bg-[#141418] border-2 border-zinc-800 focus:border-white rounded-lg p-3 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none transition-colors resize-none comic-shadow-sm font-semibold"
+          className="w-full bg-[#141418] border-2 border-zinc-800 focus:border-white rounded-none p-3 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none transition-colors resize-none comic-shadow-sm font-semibold"
         />
 
         <div className="flex items-center justify-between text-xs font-mono">
@@ -300,7 +300,7 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
           return (
             <div
               key={rule.id}
-              className={`rounded-lg p-3.5 border-2 transition-all ${
+              className={`rounded-none p-3.5 border-2 transition-all ${
                 isValid
                   ? 'bg-emerald-950/30 border-emerald-500/70 text-zinc-200 comic-shadow-sm'
                   : 'bg-[#0c0c0f] border-zinc-800 text-zinc-300 comic-shadow-sm'
@@ -330,7 +330,7 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
                   </div>
                 </div>
 
-                <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-black uppercase shrink-0 border ${
+                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-none font-black uppercase shrink-0 border ${
                   isValid 
                     ? 'bg-emerald-900/60 text-emerald-300 border-emerald-600/70' 
                     : 'bg-zinc-900 text-zinc-500 border-zinc-800'
@@ -344,12 +344,12 @@ export const PasswordGame: React.FC<PasswordGameProps> = ({ onPointsEarned }) =>
       </div>
 
       {isCompleted && (
-        <div className="rounded-xl bg-[#0c0c0f] border-2 border-emerald-500 p-6 text-center space-y-2 comic-shadow">
-          <div className="w-10 h-10 rounded-lg bg-emerald-950 border border-emerald-500 flex items-center justify-center text-emerald-400 mx-auto">
+        <div className="rounded-none bg-[#0c0c0f] border-2 border-emerald-500 p-6 text-center space-y-2 comic-shadow blocky-card-dark">
+          <div className="w-10 h-10 rounded-none bg-emerald-950 border border-emerald-500 flex items-center justify-center text-emerald-400 mx-auto">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <h4 className="text-lg font-black text-white font-mono uppercase tracking-wide">
-            ALL 15 CIPHER RULES SATISFIED! // 完全攻略
+            ALL 15 CIPHER RULES SATISFIED! // COMPLETED
           </h4>
           <p className="text-xs text-zinc-300">
             You forged an impenetrable cryptographic key. +300 bonus XP logged to your class.

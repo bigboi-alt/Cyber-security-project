@@ -95,23 +95,23 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="w-full max-w-lg bg-[#0c0c0f] border-2 border-zinc-700 rounded-xl p-6 sm:p-7 comic-shadow-lg relative space-y-5"
+        className="w-full max-w-lg bg-[#0c0c0f] border-2 border-zinc-700 rounded-none p-6 sm:p-7 comic-shadow-lg relative space-y-5 blocky-card-dark"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-3 border-b-2 border-zinc-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+            <div className="w-10 h-10 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
               <User className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
-                [ OPERATIVE DOSSIER // 個別記録 ]
+                [ OPERATIVE DOSSIER // CADET RECORD ]
               </div>
               <h2 className="text-base font-black text-white tracking-tight flex items-center gap-2 font-mono uppercase">
                 <span>{isSelf ? 'Profile Center' : 'Cadet Record'}</span>
                 {!isSelf && (
-                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-zinc-800 text-white border border-zinc-700 font-bold">
+                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-none bg-zinc-800 text-white border border-zinc-700 font-bold">
                     PUBLIC VIEW
                   </span>
                 )}
@@ -124,7 +124,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
               sound.playClick();
               onClose();
             }}
-            className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors cursor-pointer"
+            className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-none transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -149,11 +149,11 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                   }}
                   required
                   placeholder="Enter your full name"
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#141418] border-2 border-zinc-700 focus:border-white focus:outline-none text-white text-xs font-mono font-bold placeholder:text-zinc-600 transition-colors comic-shadow-sm"
+                  className="w-full px-3.5 py-2.5 rounded-none bg-[#141418] border-2 border-zinc-700 focus:border-white focus:outline-none text-white text-xs font-mono font-bold placeholder:text-zinc-600 transition-colors comic-shadow-sm"
                 />
               </div>
             ) : (
-              <div className="px-3.5 py-2.5 rounded-lg bg-[#141418] border-2 border-zinc-800 text-white text-xs font-mono font-bold">
+              <div className="px-3.5 py-2.5 rounded-none bg-[#141418] border-2 border-zinc-800 text-white text-xs font-mono font-bold">
                 {targetStudent.name}
               </div>
             )}
@@ -171,12 +171,12 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
               </span>
             </div>
             
-            <div className="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-zinc-950 border-2 border-zinc-800 text-xs font-mono">
+            <div className="flex items-center justify-between px-3.5 py-2.5 rounded-none bg-zinc-950 border-2 border-zinc-800 text-xs font-mono">
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-4 h-4 text-zinc-400" />
                 <span className="font-black text-white">CLASS {targetStudent.grade} - SECTION {targetStudent.section}</span>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 text-emerald-400 border border-emerald-800 font-bold uppercase">
+              <span className="text-[10px] px-2 py-0.5 rounded-none bg-zinc-900 text-emerald-400 border border-emerald-800 font-bold uppercase">
                 Verified
               </span>
             </div>
@@ -187,7 +187,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
 
           {/* School Email & Stats Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <div className="p-3 rounded-lg bg-[#141418] border-2 border-zinc-800 space-y-1 comic-shadow-sm">
+            <div className="p-3 rounded-none bg-[#141418] border-2 border-zinc-800 space-y-1 comic-shadow-sm">
               <div className="text-[10px] font-mono uppercase tracking-wider text-[#9d9e99] flex items-center gap-1 font-bold">
                 <Mail className="w-3 h-3" />
                 <span>School Email</span>
@@ -197,7 +197,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-[#141418] border-2 border-zinc-800 space-y-1 comic-shadow-sm">
+            <div className="p-3 rounded-none bg-[#141418] border-2 border-zinc-800 space-y-1 comic-shadow-sm">
               <div className="text-[10px] font-mono uppercase tracking-wider text-[#9d9e99] flex items-center gap-1 font-bold">
                 <ShieldCheck className="w-3 h-3 text-zinc-400" />
                 <span>Total XP Logged</span>
@@ -233,7 +233,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                       <div
                         key={idx}
                         onClick={() => handleToggleBadge(badge)}
-                        className={`flex items-center justify-between p-2.5 rounded-lg border-2 text-xs cursor-pointer transition-all ${
+                        className={`flex items-center justify-between p-2.5 rounded-none border-2 text-xs cursor-pointer transition-all ${
                           isDisplayed
                             ? 'bg-[#18181e] border-white text-white comic-shadow-sm font-bold'
                             : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
@@ -244,7 +244,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                           <span>{badge}</span>
                         </div>
 
-                        <div className={`w-4 h-4 rounded flex items-center justify-center border-2 transition-colors ${
+                        <div className={`w-4 h-4 rounded-none flex items-center justify-center border-2 transition-colors ${
                           isDisplayed 
                             ? 'bg-white border-white text-black' 
                             : 'border-zinc-700 bg-zinc-900'
@@ -256,7 +256,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                   })}
                 </div>
               ) : (
-                <div className="p-4 rounded-lg bg-zinc-950 border border-zinc-800 text-center text-xs text-zinc-500 font-mono">
+                <div className="p-4 rounded-none bg-zinc-950 border border-zinc-800 text-center text-xs text-zinc-500 font-mono">
                   No badges unlocked yet. Clear challenges to earn credentials.
                 </div>
               )
@@ -266,7 +266,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                   {publicBadges.map((badge, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border-2 border-zinc-700 text-xs font-mono text-white comic-shadow-sm font-bold"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-zinc-900 border-2 border-zinc-700 text-xs font-mono text-white comic-shadow-sm font-bold"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-[#9d9e99]" />
                       <span>{badge}</span>
@@ -274,7 +274,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                   ))}
                 </div>
               ) : (
-                <div className="p-4 rounded-lg bg-zinc-950 border border-zinc-800 text-center text-xs text-zinc-500 font-mono">
+                <div className="p-4 rounded-none bg-zinc-950 border border-zinc-800 text-center text-xs text-zinc-500 font-mono">
                   This operative has not showcased any badges on their public profile yet.
                 </div>
               )
@@ -286,7 +286,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
             <div className="pt-2 flex items-center gap-3">
               <button
                 type="submit"
-                className="flex-1 py-3 px-4 rounded-lg font-black text-xs bg-white hover:bg-zinc-200 text-black flex items-center justify-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow font-mono uppercase tracking-wider"
+                className="flex-1 py-3 px-4 rounded-none font-black text-xs bg-white hover:bg-zinc-200 text-black flex items-center justify-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow font-mono uppercase tracking-wider blocky-btn"
               >
                 {isSaved ? (
                   <>
@@ -304,7 +304,7 @@ export const ProfileCentreModal: React.FC<ProfileCentreModalProps> = ({
                   sound.playClick();
                   onClose();
                 }}
-                className="py-3 px-4 rounded-lg font-black text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors cursor-pointer uppercase font-mono tracking-wider"
+                className="py-3 px-4 rounded-none font-black text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors cursor-pointer uppercase font-mono tracking-wider blocky-btn"
               >
                 CLOSE
               </button>

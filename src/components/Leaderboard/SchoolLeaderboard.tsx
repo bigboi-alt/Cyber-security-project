@@ -32,11 +32,11 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
     <div className="space-y-6 pb-12 animate-in fade-in duration-200">
       
       {/* 1. Header Block (Comic Anime Tournament Ladder) */}
-      <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-6 sm:p-7 comic-shadow">
+      <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-6 sm:p-7 comic-shadow blocky-card-dark">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="text-[10px] uppercase font-mono tracking-widest text-[#9d9e99] font-bold">
-              [ TOURNAMENT STANDINGS // 総合順位表 ]
+              [ TOURNAMENT STANDINGS // CADET RANKINGS ]
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2.5 mt-0.5 font-mono uppercase">
               <Trophy className="w-6 h-6 text-white" />
@@ -53,7 +53,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
             <select
               value={selectedGrade}
               onChange={(e) => setSelectedGrade(e.target.value)}
-              className="bg-[#141418] border-2 border-zinc-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-white cursor-pointer font-mono font-bold comic-shadow-sm"
+              className="bg-[#141418] border-2 border-zinc-700 rounded-none px-3 py-2 text-xs text-white focus:outline-none focus:border-white cursor-pointer font-mono font-bold comic-shadow-sm"
             >
               <option value="all">ALL GRADES (6-12)</option>
               {['6', '7', '8', '9', '10', '11', '12'].map(g => (
@@ -70,7 +70,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
               sound.playClick();
               setActiveTab('sections');
             }}
-            className={`px-4 py-2.5 rounded-lg text-xs font-black uppercase font-mono flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer ${
+            className={`px-4 py-2.5 rounded-none text-xs font-black uppercase font-mono flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer blocky-btn ${
               activeTab === 'sections'
                 ? 'bg-white text-black comic-shadow'
                 : 'bg-[#141418] border-2 border-zinc-800 text-[#9d9e99] hover:text-white hover:border-zinc-600'
@@ -85,7 +85,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
               sound.playClick();
               setActiveTab('students');
             }}
-            className={`px-4 py-2.5 rounded-lg text-xs font-black uppercase font-mono flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer ${
+            className={`px-4 py-2.5 rounded-none text-xs font-black uppercase font-mono flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer blocky-btn ${
               activeTab === 'students'
                 ? 'bg-white text-black comic-shadow'
                 : 'bg-[#141418] border-2 border-zinc-800 text-[#9d9e99] hover:text-white hover:border-zinc-600'
@@ -122,7 +122,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                     onViewProfile(item as StudentProfile);
                   }
                 }}
-                className={`p-5 rounded-xl border-2 text-center space-y-2 relative overflow-hidden transition-all ${
+                className={`p-5 rounded-none border-2 text-center space-y-2 relative overflow-hidden transition-all blocky-card-dark ${
                   activeTab === 'students' ? 'cursor-pointer hover:translate-x-[-2px] hover:translate-y-[-2px]' : ''
                 } ${
                   isRank1
@@ -132,11 +132,11 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
               >
                 <div className="flex items-center justify-center mb-1">
                   {isRank1 ? (
-                    <div className="w-11 h-11 rounded-lg bg-zinc-900 border-2 border-white flex items-center justify-center text-white comic-shadow-sm">
+                    <div className="w-11 h-11 rounded-none bg-zinc-900 border-2 border-white flex items-center justify-center text-white comic-shadow-sm">
                       <Crown className="w-5 h-5 text-white" />
                     </div>
                   ) : (
-                    <div className="w-10 h-10 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-[#9d9e99]">
+                    <div className="w-10 h-10 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-[#9d9e99]">
                       <Medal className="w-4 h-4" />
                     </div>
                   )}
@@ -165,7 +165,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
       )}
 
       {/* 3. Detailed Rankings Table */}
-      <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 overflow-hidden comic-shadow">
+      <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 overflow-hidden comic-shadow blocky-card-dark">
         {activeTab === 'sections' ? (
           filteredSections.length > 0 ? (
             <div className="divide-y-2 divide-zinc-800/80">
@@ -179,7 +179,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                     }`}
                   >
                     <div className="flex items-center gap-4">
-                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono font-black text-xs border ${
+                      <span className={`w-8 h-8 rounded-none flex items-center justify-center font-mono font-black text-xs border ${
                         idx === 0 
                           ? 'bg-white text-black border-white' 
                           : idx === 1 || idx === 2 
@@ -193,7 +193,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                         <div className="flex items-center gap-2">
                           <span className="font-black text-sm text-white font-mono uppercase">Class {sec.grade}-{sec.section}</span>
                           {isMySection && (
-                            <span className="text-[10px] bg-zinc-800 border border-zinc-700 text-[#9d9e99] px-2 py-0.5 rounded font-mono font-bold">
+                            <span className="text-[10px] bg-zinc-800 border border-zinc-700 text-[#9d9e99] px-2 py-0.5 rounded-none font-mono font-bold">
                               YOUR SQUAD
                             </span>
                           )}
@@ -236,7 +236,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                     title="Click to view operative dossier and badges"
                   >
                     <div className="flex items-center gap-4">
-                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono font-black text-xs border ${
+                      <span className={`w-8 h-8 rounded-none flex items-center justify-center font-mono font-black text-xs border ${
                         idx === 0 
                           ? 'bg-white text-black border-white' 
                           : idx === 1 || idx === 2 
@@ -250,7 +250,7 @@ export const SchoolLeaderboard: React.FC<SchoolLeaderboardProps> = ({ currentStu
                         <div className="flex items-center gap-2">
                           <span className="font-black text-sm text-white font-mono uppercase group-hover:underline underline-offset-2">{st.name}</span>
                           {isCurrentUser && (
-                            <span className="text-[10px] bg-zinc-800 border border-zinc-700 text-[#9d9e99] px-2 py-0.5 rounded font-mono font-bold">
+                            <span className="text-[10px] bg-zinc-800 border border-zinc-700 text-[#9d9e99] px-2 py-0.5 rounded-none font-mono font-bold">
                               YOU
                             </span>
                           )}

@@ -181,14 +181,14 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
   return (
     <div className="max-w-2xl mx-auto space-y-5 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#0c0c0f] p-4 rounded-xl border-2 border-zinc-800 comic-shadow">
+      <div className="flex items-center justify-between bg-[#0c0c0f] p-4 rounded-none border-2 border-zinc-800 comic-shadow blocky-card-dark">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
+          <div className="w-9 h-9 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white comic-shadow-sm">
             <FileQuestion className="w-4 h-4 text-white" />
           </div>
           <div>
             <div className="text-[10px] font-mono text-[#9d9e99] uppercase tracking-widest font-bold">
-              [ ACT.04 // 脅威分析 ]
+              [ ACT.04 // THREAT EVALUATION ]
             </div>
             <h3 className="text-sm font-black text-white font-mono uppercase tracking-wide">
               Threat Scenario Evaluation
@@ -203,13 +203,13 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
       </div>
 
       {!isCompleted ? (
-        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-5 sm:p-6 space-y-5 comic-shadow">
+        <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-5 sm:p-6 space-y-5 comic-shadow blocky-card-dark">
           {/* Progress */}
           <div className="flex items-center justify-between text-xs font-mono border-b border-zinc-800 pb-3">
             <span className="text-[#9d9e99] font-bold uppercase tracking-wider">
               SCENARIO 0{currentIndex + 1} // 0{QUIZ_QUESTIONS.length}
             </span>
-            <span className="font-mono text-white bg-zinc-900 px-2 py-0.5 rounded border border-zinc-700 text-[11px] font-bold">
+            <span className="font-mono text-white bg-zinc-900 px-2 py-0.5 rounded-none border border-zinc-700 text-[11px] font-bold">
               +{currentQ.points} PTS
             </span>
           </div>
@@ -226,7 +226,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
 
           {/* Visual Scenario Card (Comic Callout / Dossier) */}
           {currentQ.visualContent && (
-            <div className="rounded-lg bg-[#141418] border-2 border-zinc-800 p-4 text-xs font-mono comic-shadow-sm">
+            <div className="rounded-none bg-[#141418] border-2 border-zinc-800 p-4 text-xs font-mono comic-shadow-sm">
               {currentQ.visualType === 'email' && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-zinc-300 font-sans border-b border-zinc-800 pb-2">
@@ -265,7 +265,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
                     <Globe className="w-3.5 h-3.5 text-white" />
                     <span>Target URL Inspection</span>
                   </div>
-                  <div className="text-zinc-200 break-all select-all font-mono bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs">
+                  <div className="text-zinc-200 break-all select-all font-mono bg-zinc-950 p-2.5 rounded-none border border-zinc-800 text-xs">
                     {currentQ.visualContent.url}
                   </div>
                 </div>
@@ -277,7 +277,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
                     <HardDrive className="w-3.5 h-3.5 text-white" />
                     <span>Storage Registry Dump</span>
                   </div>
-                  <div className="text-zinc-200 whitespace-pre-line bg-zinc-950 p-2.5 rounded border border-zinc-800 text-xs leading-relaxed">
+                  <div className="text-zinc-200 whitespace-pre-line bg-zinc-950 p-2.5 rounded-none border border-zinc-800 text-xs leading-relaxed">
                     {currentQ.visualContent.body}
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
                   key={option.id}
                   disabled={isAnswerSubmitted}
                   onClick={() => handleSelectOption(option.id)}
-                  className={`w-full p-3.5 rounded-lg text-left text-xs flex items-start gap-3 transition-all cursor-pointer ${style}`}
+                  className={`w-full p-3.5 rounded-none text-left text-xs flex items-start gap-3 transition-all cursor-pointer ${style}`}
                 >
                   <span className="font-mono uppercase font-black w-5 mt-0.5 text-zinc-400">
                     [{option.id}]
@@ -331,7 +331,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
             <button
               disabled={!selectedOptionId}
               onClick={handleSubmitAnswer}
-              className={`w-full py-3 px-4 rounded-lg font-black text-xs flex items-center justify-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase tracking-wider font-mono ${
+              className={`w-full py-3 px-4 rounded-none font-black text-xs flex items-center justify-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase tracking-wider font-mono blocky-btn ${
                 selectedOptionId
                   ? 'bg-white hover:bg-zinc-200 text-black'
                   : 'bg-zinc-800 text-zinc-600 cursor-not-allowed opacity-60'
@@ -342,7 +342,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
             </button>
           ) : (
             <div className="space-y-3">
-              <div className="p-4 rounded-lg bg-[#141418] border-2 border-zinc-800 text-xs text-zinc-200 leading-relaxed comic-shadow-sm">
+              <div className="p-4 rounded-none bg-[#141418] border-2 border-zinc-800 text-xs text-zinc-200 leading-relaxed comic-shadow-sm">
                 <div className="font-black text-white font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 text-[11px]">
                   <span>// DEBRIEFING ANALYSIS</span>
                 </div>
@@ -351,7 +351,7 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
 
               <button
                 onClick={handleNextQuestion}
-                className="w-full py-3 px-4 rounded-lg font-black text-xs bg-white hover:bg-zinc-200 text-black transition-transform active:translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer comic-shadow uppercase tracking-wider font-mono"
+                className="w-full py-3 px-4 rounded-none font-black text-xs bg-white hover:bg-zinc-200 text-black transition-transform active:translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer comic-shadow uppercase tracking-wider font-mono blocky-btn"
               >
                 <span>{currentIndex < QUIZ_QUESTIONS.length - 1 ? 'NEXT SCENARIO →' : 'CONCLUDE ASSESSMENT →'}</span>
               </button>
@@ -360,19 +360,19 @@ export const CyberQuiz: React.FC<CyberQuizProps> = ({ onPointsEarned }) => {
         </div>
       ) : (
         /* Completed */
-        <div className="rounded-xl bg-[#0c0c0f] border-2 border-zinc-800 p-8 text-center space-y-4 comic-shadow">
-          <div className="w-12 h-12 rounded-lg bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white mx-auto comic-shadow-sm">
+        <div className="rounded-none bg-[#0c0c0f] border-2 border-zinc-800 p-8 text-center space-y-4 comic-shadow blocky-card-dark">
+          <div className="w-12 h-12 rounded-none bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-white mx-auto comic-shadow-sm">
             <CheckCircle2 className="w-6 h-6 text-emerald-400" />
           </div>
           <h3 className="text-xl font-black text-white font-mono uppercase tracking-wide">
-            EVALUATION CONCLUDED // 作戦完了
+            EVALUATION CONCLUDED // OPERATION FINISHED
           </h3>
           <p className="text-xs text-zinc-400">
             You achieved an operative score of <strong className="text-white font-mono">{score} points</strong>. All telemetry has been recorded to your class dossier.
           </p>
           <button
             onClick={handleRestart}
-            className="px-5 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs inline-flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase font-mono tracking-wider"
+            className="px-5 py-2.5 rounded-none bg-white hover:bg-zinc-200 text-black font-black text-xs inline-flex items-center gap-2 transition-transform active:translate-y-0.5 cursor-pointer comic-shadow uppercase font-mono tracking-wider blocky-btn"
           >
             <RotateCcw className="w-4 h-4" />
             <span>RE-EVALUATE SCENARIOS</span>

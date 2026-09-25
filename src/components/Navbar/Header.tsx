@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
             NEXUM
           </span>
           <span className="hidden sm:inline-block text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-semibold">
-            // ネクサス
+            // CYBER DEFENSE
           </span>
         </div>
 
@@ -93,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Right: Operative Profile Badge & Login */}
         <div className="flex items-center gap-2 shrink-0">
           {student ? (
-            <div className="flex items-center gap-2.5 bg-[#0e0e12] border-2 border-zinc-800 rounded-lg px-3 py-1.5 comic-shadow-sm">
+            <div className="flex items-center gap-2.5 bg-[#0e0e12] border-2 border-zinc-800 rounded-none px-3 py-1.5 comic-shadow-sm">
               <button
                 onClick={() => {
                   sound.playClick();
@@ -103,11 +103,11 @@ export const Header: React.FC<HeaderProps> = ({
                 title="Click to view and edit profile"
               >
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-none bg-emerald-400 shrink-0" />
                   <span className="text-xs font-bold text-white whitespace-nowrap group-hover:underline underline-offset-2">
                     {student.name}
                   </span>
-                  <span className="text-[10px] font-mono px-1 py-0.2 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">
+                  <span className="text-[10px] font-mono px-1 py-0.2 bg-zinc-800 text-zinc-300 rounded-none border border-zinc-700">
                     {student.grade}-{student.section}
                   </span>
                 </div>
@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onLogout}
-                className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors cursor-pointer"
+                className="p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-none transition-colors cursor-pointer"
                 title="Sign out or switch student"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -130,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({
                 sound.playClick();
                 onOpenLogin();
               }}
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-black text-xs transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-none bg-white hover:bg-zinc-200 text-black font-black text-xs transition-transform active:translate-y-0.5 cursor-pointer comic-shadow-sm blocky-btn"
             >
               <User className="w-3.5 h-3.5" />
               <span>Login</span>
@@ -152,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
                   sound.playClick();
                   onTabChange(item.id);
                 }}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-none text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
                   isActive
                     ? 'bg-zinc-800 text-white border border-zinc-600'
                     : 'text-zinc-400 hover:text-white'
